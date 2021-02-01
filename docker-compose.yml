@@ -1,0 +1,45 @@
+---
+version: "2"
+services:
+  influxdb:
+    container_name: influxdb
+    image: influxdb:1.7.10
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+    volumes:
+      - influxdb-storage:/var/lib/influxdb
+    restart: always
+
+  grafana:
+    container_name: grafana
+    env_file:
+      - ./docker/environment
+    image: grafana/grafana:7.3.7
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    user: "472:472"
+    ports:
+      - "3000:3000"
+    links:
+      - "influxdb:influxdb"
+    restart: always
+
+  telegraf:
+    container_name: telegraf
+    entrypoint: telegraf -config /etc/telegraf/telegraf.conf -config-directory /etc/telegraf/telegraf.d
+    env_file:
+      - ./docker/environment
+    image: telegraf:1.15.4
+    volumes:
+      - ./docker/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
+      - ./telegraf:/etc/telegraf/telegraf.d
+    links:
+      - "influxdb:influxdb"
+    restart: always
+
+volumes:
+  influxdb-storage:
+    driver: local
+  grafana-storage:
+    driver: local

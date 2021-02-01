@@ -11,6 +11,29 @@ Dashboards rely on the following softwares:
 
 This stack is also known as the **TIG** stack.
 
+## Quickstart
+
+The easiest way to test is to use [Docker](https://www.docker.com/). Ensure you have `docker` and
+`docker-compose` binary installed.
+
+Write your miner address, grafana username and grafana password:
+
+```
+vi docker/environment
+```
+
+Then start containers:
+
+```
+docker-compose up
+```
+
+## Going further
+
+You should secure [InfluxDB](https://docs.influxdata.com/influxdb/v1.7/administration/security/) by using encryption for
+communication, tokens for authentication (one read-only token for Grafana, one write only for Telegraf). The stack
+doesn't require Docker.
+
 ## Disclaimer
 
 Telegraf is able to make API call on thrid-party services. Please read terms of service before going further. The
