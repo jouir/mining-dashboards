@@ -1,2 +1,3 @@
 docker/ssl/*
 !docker/ssl/.gitkeep
+docker/environment

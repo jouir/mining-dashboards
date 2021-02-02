@@ -21,7 +21,6 @@ services:
     image: grafana/grafana:7.3.7
     volumes:
       - grafana-storage:/var/lib/grafana
-    user: "472:472"
     ports:
       - "3000:3000"
     links:

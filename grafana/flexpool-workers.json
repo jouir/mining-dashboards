@@ -1,4 +1,40 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.3.7"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -16,13 +52,13 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 15,
-  "iteration": 1612082234009,
+  "id": null,
+  "iteration": 1612282845458,
   "links": [],
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -39,11 +75,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -70,9 +107,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -106,6 +144,8 @@
           "measurement": "flexpool_workers",
           "orderByTime": "ASC",
           "policy": "home",
+          "query": "SELECT mean(\"effective_hashrate\") FROM \"flexpool_workers\" WHERE (\"miner\" =~ /^$miner$/ AND \"name\" =~ /^$worker$/) AND $timeFilter GROUP BY time($__interval), \"miner\" fill(null)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -161,6 +201,8 @@
           "measurement": "flexpool_workers",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT mean(\"reported_hashrate\") FROM \"flexpool_workers\" WHERE (\"miner\" =~ /^$miner$/ AND \"name\" =~ /^$worker$/) AND $timeFilter GROUP BY time($__interval), \"miner\" fill(null)",
+          "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
           "select": [
@@ -234,7 +276,7 @@
       }
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -272,10 +314,12 @@
           "calcs": [
             "mean"
           ],
+          "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "alias": "hashrate",
@@ -333,7 +377,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -371,10 +415,12 @@
           "calcs": [
             "mean"
           ],
+          "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "alias": "hashrate",
@@ -433,7 +479,7 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -450,11 +496,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -481,9 +528,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -695,7 +743,7 @@
       }
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -732,10 +780,12 @@
           "calcs": [
             "mean"
           ],
+          "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "alias": "valid",
@@ -793,7 +843,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -833,10 +883,12 @@
           "calcs": [
             "mean"
           ],
+          "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "alias": "stale",
@@ -894,7 +946,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -935,10 +987,12 @@
           "calcs": [
             "mean"
           ],
+          "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "alias": "invalid",
@@ -996,7 +1050,7 @@
       "type": "stat"
     }
   ],
-  "schemaVersion": 25,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
     "flexpool",
@@ -1006,13 +1060,10 @@
     "list": [
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "MINER_ADDRESS",
-          "value": "MINER_ADDRESS"
-        },
-        "datasource": "InfluxDB",
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
         "definition": "SHOW TAG VALUES WITH KEY = \"miner\"",
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": null,
@@ -1032,13 +1083,10 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "rig1",
-          "value": "rig1"
-        },
-        "datasource": "InfluxDB",
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
         "definition": "SHOW TAG VALUES WITH KEY = \"name\" WHERE miner =~ /^$miner$/",
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": null,
@@ -1078,5 +1126,5 @@
   "timezone": "",
   "title": "Flexpool workers",
   "uid": "slcUBSzgz",
-  "version": 7
+  "version": 2
 }
