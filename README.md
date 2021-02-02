@@ -13,8 +13,10 @@ This stack is also known as the **TIG** stack.
 
 ## Quickstart
 
-The easiest way to test is to use [Docker](https://www.docker.com/). Ensure you have `docker` and
-`docker-compose` binary installed.
+**Testing purpose only**.
+
+This guide uses [Docker](https://www.docker.com/). Ensure you have `docker`, `docker-compose` and `openssl` binaries
+installed.
 
 Write your miner address, grafana and influxdb credentials:
 
@@ -22,16 +24,19 @@ Write your miner address, grafana and influxdb credentials:
 vi docker/environment
 ```
 
+Generate a self-signed certificate:
+
+```
+openssl req -x509 -nodes -newkey rsa:2048 -keyout docker/ssl/influxdb.key -out docker/ssl/influxdb.crt -days 365
+```
+
+Press enter to every question.
+
 Then start containers:
 
 ```
 docker-compose up -d
 ```
-
-## Going further
-
-You should secure [InfluxDB](https://docs.influxdata.com/influxdb/v1.7/administration/security/) by using encryption for
-communication. The stack doesn't require Docker.
 
 ## Disclaimer
 
