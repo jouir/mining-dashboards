@@ -16,7 +16,7 @@ This stack is also known as the **TIG** stack.
 The easiest way to test is to use [Docker](https://www.docker.com/). Ensure you have `docker` and
 `docker-compose` binary installed.
 
-Write your miner address, grafana username and grafana password:
+Write your miner address, grafana and influxdb credentials:
 
 ```
 vi docker/environment
@@ -25,14 +25,13 @@ vi docker/environment
 Then start containers:
 
 ```
-docker-compose up
+docker-compose up -d
 ```
 
 ## Going further
 
 You should secure [InfluxDB](https://docs.influxdata.com/influxdb/v1.7/administration/security/) by using encryption for
-communication, tokens for authentication (one read-only token for Grafana, one write only for Telegraf). The stack
-doesn't require Docker.
+communication. The stack doesn't require Docker.
 
 ## Disclaimer
 

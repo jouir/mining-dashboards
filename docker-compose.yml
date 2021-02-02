@@ -3,6 +3,8 @@ version: "2"
 services:
   influxdb:
     container_name: influxdb
+    env_file:
+      - ./docker/environment
     image: influxdb:1.7.10
     ports:
       - "8083:8083"
@@ -32,7 +34,7 @@ services:
       - ./docker/environment
     image: telegraf:1.15.4
     volumes:
-      - ./docker/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
+      - ./docker/telegraf.conf:/etc/telegraf/telegraf.conf
       - ./telegraf:/etc/telegraf/telegraf.d
     links:
       - "influxdb:influxdb"
