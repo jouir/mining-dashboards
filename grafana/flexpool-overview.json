@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "7.3.7"
+      "version": "7.0.0"
     },
     {
       "type": "panel",
@@ -53,7 +53,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1612282612782,
+  "iteration": 1612436676297,
   "links": [],
   "panels": [
     {
@@ -104,7 +104,8 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "dataLinks": []
       },
       "percentage": false,
       "pluginVersion": "7.3.7",
@@ -239,7 +240,8 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "dataLinks": []
       },
       "percentage": false,
       "pluginVersion": "7.3.7",
@@ -374,7 +376,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.7",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "alias": "balance",
@@ -469,7 +471,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.7",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "alias": "balance",
@@ -551,7 +553,8 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "dataLinks": []
       },
       "percentage": false,
       "pluginVersion": "7.3.7",
@@ -686,7 +689,8 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "dataLinks": []
       },
       "percentage": false,
       "pluginVersion": "7.3.7",
@@ -825,7 +829,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.7",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "alias": "revenue",
@@ -919,7 +923,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.7",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "alias": "revenue",
@@ -1001,7 +1005,8 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "dataLinks": []
       },
       "percentage": false,
       "pluginVersion": "7.3.7",
@@ -1137,7 +1142,8 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "dataLinks": []
       },
       "percentage": false,
       "pluginVersion": "7.3.7",
@@ -1274,7 +1280,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.7",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "alias": "paid",
@@ -1368,7 +1374,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.7",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "alias": "paid",
@@ -1479,7 +1485,8 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "dataLinks": []
       },
       "percentage": false,
       "pluginVersion": "7.3.7",
@@ -1492,19 +1499,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_name",
+          "alias": "hashrate",
           "groupBy": [
             {
               "params": [
                 "$__interval"
               ],
               "type": "time"
-            },
-            {
-              "params": [
-                "name"
-              ],
-              "type": "tag"
             },
             {
               "params": [
@@ -1528,7 +1529,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "sum"
               }
             ]
           ],
@@ -1545,7 +1546,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Effective hashrates",
+      "title": "Effective hashrate",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1561,6 +1562,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:154",
           "format": "Hs",
           "label": null,
           "logBase": 1,
@@ -1569,6 +1571,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:155",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1618,7 +1621,8 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "dataLinks": []
       },
       "percentage": false,
       "pluginVersion": "7.3.7",
@@ -1631,19 +1635,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_name",
+          "alias": "hashrate",
           "groupBy": [
             {
               "params": [
                 "$__interval"
               ],
               "type": "time"
-            },
-            {
-              "params": [
-                "name"
-              ],
-              "type": "tag"
             },
             {
               "params": [
@@ -1667,7 +1665,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "sum"
               }
             ]
           ],
@@ -1684,7 +1682,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Reported hashrates",
+      "title": "Reported hashrate",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1700,6 +1698,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:267",
           "format": "Hs",
           "label": null,
           "logBase": 1,
@@ -1708,6 +1707,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:268",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1766,7 +1766,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.7",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "alias": "hashrate",
@@ -1862,7 +1862,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.7",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "alias": "hashrate",
@@ -1950,7 +1950,8 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "dataLinks": []
       },
       "percentage": false,
       "pluginVersion": "7.3.7",
@@ -2135,7 +2136,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.7",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "alias": "hashrate",
@@ -2231,7 +2232,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.7",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "alias": "hashrate",
@@ -2327,7 +2328,8 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "dataLinks": []
       },
       "percentage": false,
       "pluginVersion": "7.3.7",
@@ -2561,7 +2563,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.7",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "alias": "valid",
@@ -2659,7 +2661,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.7",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "alias": "stale",
@@ -2758,7 +2760,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.7",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "alias": "invalid",
@@ -2810,7 +2812,7 @@
       "type": "stat"
     }
   ],
-  "schemaVersion": 26,
+  "schemaVersion": 25,
   "style": "dark",
   "tags": [
     "flexpool",
@@ -2909,5 +2911,5 @@
   "timezone": "",
   "title": "Flexpool overview",
   "uid": "Q3JPASkgz",
-  "version": 5
+  "version": 2
 }
