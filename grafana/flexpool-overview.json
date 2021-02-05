@@ -53,7 +53,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1612436676297,
+  "iteration": 1612541813289,
   "links": [],
   "panels": [
     {
@@ -1514,7 +1514,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_workers",
+          "measurement": "flexpool_stats",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1523,13 +1523,13 @@
             [
               {
                 "params": [
-                  "effective_hashrate"
+                  "current_effective_hashrate"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "sum"
+                "type": "mean"
               }
             ]
           ],
@@ -1650,7 +1650,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_workers",
+          "measurement": "flexpool_stats",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1659,13 +1659,13 @@
             [
               {
                 "params": [
-                  "reported_hashrate"
+                  "current_reported_hashrate"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "sum"
+                "type": "mean"
               }
             ]
           ],
@@ -2911,5 +2911,5 @@
   "timezone": "",
   "title": "Flexpool overview",
   "uid": "Q3JPASkgz",
-  "version": 2
+  "version": 4
 }
