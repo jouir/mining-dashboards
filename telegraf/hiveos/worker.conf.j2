@@ -1,0 +1,13 @@
+[[inputs.http]]
+  name_override = "hiveos_gpu"
+  urls = ["https://api2.hiveos.farm/api/v2/farms/{{farm_id}}/workers/{{worker_id}}"]
+  headers = {"Content-Type" = "application/json"}
+  headers = {"Authorization" = "Bearer ${HIVEOS_TOKEN}"}
+  data_format = "json"
+  tagexclude = ["url"]
+  tag_keys = ["bus_number"]
+  json_query = "gpu_stats"
+  [inputs.http.tags]
+    farm_id = "{{farm_id}}"
+    worker_id = "{{worker_id}}"
+

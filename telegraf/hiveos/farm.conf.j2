@@ -1,0 +1,8 @@
+[[inputs.http]]
+  name_override = "hiveos_farm"
+  urls = ["https://api2.hiveos.farm/api/v2/farms/{{farm_id}}"]
+  headers = {"Content-Type" = "application/json"}
+  headers = {"Authorization" = "Bearer ${HIVEOS_TOKEN}"}
+  data_format = "json"
+  tagexclude = ["url"]
+  tag_keys = ["name", "id"]

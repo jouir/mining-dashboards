@@ -20,12 +20,14 @@ This stack is also known as the **TIG** stack.
 This guide uses [Docker](https://www.docker.com/). Ensure you have `docker`, `docker-compose` and `openssl` binaries
 installed.
 
-Write your miner address, grafana and influxdb credentials:
+Write grafana and influxdb credentials:
 
 ```
 cp -p docker/environment.example docker/environment
 vi docker/environment
 ```
+
+Depending on inputs, you should also set the miner address and HiveOS token.
 
 Generate a self-signed certificate:
 

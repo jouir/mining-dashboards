@@ -1,3 +1,6 @@
 docker/ssl/*
 !docker/ssl/.gitkeep
 docker/environment
+telegraf/hiveos.conf
+telegraf/hiveos/hiveos.conf
+telegraf/hiveos/venv
