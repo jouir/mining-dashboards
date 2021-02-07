@@ -53,7 +53,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1612714194723,
+  "iteration": 1612714194726,
   "links": [],
   "panels": [
     {
@@ -1015,7 +1015,7 @@
       "timeFrom": "1y",
       "timeRegions": [],
       "timeShift": null,
-      "title": "Monthly revenue",
+      "title": "Monthly revenue (fiat)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -3449,5 +3449,5 @@
   "timezone": "",
   "title": "Flexpool overview",
   "uid": "Q3JPASkgz",
-  "version": 5
+  "version": 6
 }
