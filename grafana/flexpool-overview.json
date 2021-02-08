@@ -53,7 +53,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1612714194726,
+  "iteration": 1612770291267,
   "links": [],
   "panels": [
     {
@@ -589,7 +589,13 @@
               },
               {
                 "params": [],
-                "type": "spread"
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "1d"
+                ],
+                "type": "non_negative_derivative"
               },
               {
                 "params": [
@@ -723,7 +729,13 @@
               },
               {
                 "params": [],
-                "type": "spread"
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "1d"
+                ],
+                "type": "non_negative_derivative"
               },
               {
                 "params": [
@@ -857,7 +869,13 @@
               },
               {
                 "params": [],
-                "type": "spread"
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "31d"
+                ],
+                "type": "non_negative_derivative"
               },
               {
                 "params": [
@@ -992,7 +1010,13 @@
               },
               {
                 "params": [],
-                "type": "spread"
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "31d"
+                ],
+                "type": "non_negative_derivative"
               },
               {
                 "params": [
@@ -3449,5 +3473,5 @@
   "timezone": "",
   "title": "Flexpool overview",
   "uid": "Q3JPASkgz",
-  "version": 6
+  "version": 8
 }
