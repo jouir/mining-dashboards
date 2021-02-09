@@ -53,7 +53,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1612770291267,
+  "iteration": 1612890296032,
   "links": [],
   "panels": [
     {
@@ -183,6 +183,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1341",
           "format": "ETH",
           "label": null,
           "logBase": 1,
@@ -191,6 +192,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:1342",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -577,6 +579,8 @@
           "measurement": "flexpool_balance",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(1d);",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -717,6 +721,8 @@
           "measurement": "flexpool_balance",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(1d);",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -857,6 +863,8 @@
           "measurement": "flexpool_balance",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(31d);",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -998,6 +1006,8 @@
           "measurement": "flexpool_balance",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(31d);",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -3454,7 +3464,7 @@
     ]
   },
   "time": {
-    "from": "now-7d",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {
@@ -3473,5 +3483,5 @@
   "timezone": "",
   "title": "Flexpool overview",
   "uid": "Q3JPASkgz",
-  "version": 8
+  "version": 10
 }
