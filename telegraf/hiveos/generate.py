@@ -35,31 +35,52 @@ class HiveAPI:
         self.session = session
         self.base_url = 'https://api2.hiveos.farm/api/v2'
         self.farms = {}
-        for farm_id in self.fetch_farms():
-            self.farms[farm_id] = self.fetch_workers(farm_id=farm_id)
+        for farm in self.fetch_farms():
+            self.farms[farm] = self.fetch_workers(farm_id=farm.number)
 
     def fetch_farms(self):
         r = self.session.get(f'{self.base_url}/farms')
         r.raise_for_status()
         farms = r.json().get('data')
         if farms:
-            return [f.get('id') for f in farms]
+            return [Farm(number=f['id'], name=f['name']) for f in farms]
 
     def fetch_workers(self, farm_id):
         r = self.session.get(f'{self.base_url}/farms/{farm_id}/workers')
         r.raise_for_status()
         workers = r.json().get('data')
         if workers:
-            return [w.get('id') for w in workers]
+            return [Worker(number=w['id'], farm_id=farm_id, name=w['name']) for w in workers]
+
+
+class Farm:
+    def __init__(self, number, name):
+        self.number = number
+        self.name = name
+
+    def __repr__(self):
+        return f'<Farm #{self.number}({self.name})>'
+
+
+class Worker:
+    def __init__(self, number, farm_id, name):
+        self.number = number
+        self.farm_id = farm_id
+        self.name = name
+
+    def __repr__(self):
+        return f'<Worker #{self.number}({self.name}@Farm#{self.farm_id})>'
 
 
 def create_farm_configuration(farm_id):
-    return create_configuration(template_name='farm.conf.j2', template_variables={'farm_id': farm_id})
+    template_variables = {'farm_id': farm_id}
+    return create_configuration(template_name='farm.conf.j2', template_variables=template_variables)
 
 
-def create_worker_configuration(farm_id, worker_id):
-    return create_configuration(template_name='worker.conf.j2',
-                                template_variables={'farm_id': farm_id, 'worker_id': worker_id})
+def create_worker_configuration(farm_id, farm_name, worker_id, worker_name):
+    template_variables = {'farm_id': farm_id, 'farm_name': farm_name, 'worker_id': worker_id,
+                          'worker_name': worker_name}
+    return create_configuration(template_name='worker.conf.j2', template_variables=template_variables)
 
 
 def create_configuration(template_name, template_variables):
@@ -84,12 +105,13 @@ def main():
     api = HiveAPI(token=token)
 
     configurations = []
-    for farm_id in api.farms:
-        logger.info(f'generating configuration for farm {farm_id}')
-        configurations.append(create_farm_configuration(farm_id=farm_id))
-        for worker_id in api.farms[farm_id]:
-            logger.info(f'generating configuration for worker {worker_id}')
-            configurations.append(create_worker_configuration(farm_id=farm_id, worker_id=worker_id))
+    for farm in api.farms:
+        logger.info(f"generating configuration for farm {farm}")
+        configurations.append(create_farm_configuration(farm_id=farm.number))
+        for worker in api.farms[farm]:
+            logger.info(f'generating configuration for worker {worker}')
+            configurations.append(create_worker_configuration(farm_id=farm.number, farm_name=farm.name,
+                                                              worker_id=worker.number, worker_name=worker.name))
 
     logger.info('writing configuration to file')
     with open('hiveos.conf', 'w') as fd:
