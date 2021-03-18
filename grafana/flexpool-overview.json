@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "7.0.0"
+      "version": "7.3.7"
     },
     {
       "type": "panel",
@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1614928977404,
+  "iteration": 1616061734073,
   "links": [],
   "panels": [
     {
@@ -83,7 +83,8 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -110,9 +111,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -270,7 +272,8 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -297,9 +300,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -688,7 +692,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "alias": "balance",
@@ -974,7 +978,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "alias": "revenue",
@@ -1306,7 +1310,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "alias": "paid",
@@ -1402,7 +1406,8 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": "center"
+            "align": "center",
+            "filterable": false
           },
           "mappings": [],
           "thresholds": {
@@ -1468,7 +1473,7 @@
       "options": {
         "showHeader": true
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "groupBy": [],
@@ -1549,477 +1554,12 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 8,
-        "w": 6,
+        "w": 12,
         "x": 0,
         "y": 34
       },
       "hiddenSeries": false,
       "id": 44,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true,
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "hashrate",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_stats",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "current_effective_hashrate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Effective hashrate",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:154",
-          "format": "Hs",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:155",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_INFLUXDB}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 6,
-        "y": 34
-      },
-      "hiddenSeries": false,
-      "id": 46,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true,
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "hashrate",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_stats",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "current_reported_hashrate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Reported hashrate",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:267",
-          "format": "Hs",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:268",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "datasource": "${DS_INFLUXDB}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "rgb(0, 0, 0)",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "Hs"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 12,
-        "y": 34
-      },
-      "hideTimeOverride": true,
-      "id": 18,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.0.0",
-      "targets": [
-        {
-          "alias": "hashrate",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_stats",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "current_effective_hashrate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            }
-          ]
-        }
-      ],
-      "timeFrom": "5m",
-      "timeShift": null,
-      "title": "Current effective hashrate",
-      "type": "stat"
-    },
-    {
-      "datasource": "${DS_INFLUXDB}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "rgb(0, 0, 0)",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "Hs"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 18,
-        "y": 34
-      },
-      "hideTimeOverride": true,
-      "id": 20,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.0.0",
-      "targets": [
-        {
-          "alias": "hashrate",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_stats",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "current_reported_hashrate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            }
-          ]
-        }
-      ],
-      "timeFrom": "5m",
-      "timeShift": null,
-      "title": "Current reported hashrate",
-      "type": "stat"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_INFLUXDB}",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 42
-      },
-      "hiddenSeries": false,
-      "id": 4,
       "legend": {
         "avg": false,
         "current": false,
@@ -2057,6 +1597,226 @@
             },
             {
               "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "current_effective_hashrate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            }
+          ]
+        },
+        {
+          "alias": "reported",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "current_reported_hashrate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            }
+          ]
+        },
+        {
+          "alias": "daily effective",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "daily_effective_hashrate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Hashrates",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:154",
+          "format": "Hs",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:155",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "datasource": "${DS_INFLUXDB}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "rgb(0, 0, 0)",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "Hs"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 34
+      },
+      "hideTimeOverride": true,
+      "id": 18,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "alias": "effective",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
                 "null"
               ],
               "type": "fill"
@@ -2071,7 +1831,7 @@
             [
               {
                 "params": [
-                  "daily_effective_hashrate"
+                  "current_effective_hashrate"
                 ],
                 "type": "field"
               },
@@ -2114,7 +1874,7 @@
             [
               {
                 "params": [
-                  "daily_reported_hashrate"
+                  "current_reported_hashrate"
                 ],
                 "type": "field"
               },
@@ -2131,98 +1891,9 @@
               "value": "/^$miner$/"
             }
           ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Daily hashrates",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "Hs",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
         },
         {
-          "format": "Hs",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "datasource": "${DS_INFLUXDB}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "rgb(0, 0, 0)",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "Hs"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 12,
-        "y": 42
-      },
-      "hideTimeOverride": true,
-      "id": 22,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.0.0",
-      "targets": [
-        {
-          "alias": "hashrate",
+          "alias": "daily effective",
           "groupBy": [
             {
               "params": [
@@ -2240,7 +1911,7 @@
           "measurement": "flexpool_stats",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "A",
+          "refId": "C",
           "resultFormat": "time_series",
           "select": [
             [
@@ -2267,97 +1938,7 @@
       ],
       "timeFrom": "5m",
       "timeShift": null,
-      "title": "Daily effective hashrate",
-      "type": "stat"
-    },
-    {
-      "datasource": "${DS_INFLUXDB}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "rgb(0, 0, 0)",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "Hs"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 18,
-        "y": 42
-      },
-      "hideTimeOverride": true,
-      "id": 24,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.0.0",
-      "targets": [
-        {
-          "alias": "hashrate",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_stats",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "daily_reported_hashrate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "timeFrom": "5m",
-      "timeShift": null,
-      "title": "Daily reported hashrate",
+      "title": "Current effective hashrate",
       "type": "stat"
     },
     {
@@ -2367,7 +1948,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 50
+        "y": 42
       },
       "id": 14,
       "panels": [],
@@ -2394,7 +1975,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 51
+        "y": 43
       },
       "hiddenSeries": false,
       "id": 6,
@@ -2628,7 +2209,7 @@
         "h": 8,
         "w": 4,
         "x": 12,
-        "y": 51
+        "y": 43
       },
       "hideTimeOverride": true,
       "id": 8,
@@ -2646,7 +2227,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "alias": "valid",
@@ -2726,7 +2307,7 @@
         "h": 8,
         "w": 4,
         "x": 16,
-        "y": 51
+        "y": 43
       },
       "hideTimeOverride": true,
       "id": 10,
@@ -2744,7 +2325,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "alias": "stale",
@@ -2825,7 +2406,7 @@
         "h": 8,
         "w": 4,
         "x": 20,
-        "y": 51
+        "y": 43
       },
       "hideTimeOverride": true,
       "id": 12,
@@ -2843,7 +2424,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "alias": "invalid",
@@ -2895,7 +2476,7 @@
       "type": "stat"
     }
   ],
-  "schemaVersion": 25,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
     "flexpool",
@@ -2994,5 +2575,5 @@
   "timezone": "",
   "title": "Flexpool overview",
   "uid": "Q3JPASkgz",
-  "version": 12
+  "version": 2
 }
