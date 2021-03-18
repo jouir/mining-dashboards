@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1616061734073,
+  "iteration": 1616068614673,
   "links": [],
   "panels": [
     {
@@ -241,6 +241,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:180",
+          "decimals": 5,
           "format": "ETH",
           "label": "income",
           "logBase": 1,
@@ -431,6 +432,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:180",
+          "decimals": 5,
           "format": "ETH",
           "label": "income",
           "logBase": 1,
@@ -2575,5 +2577,5 @@
   "timezone": "",
   "title": "Flexpool overview",
   "uid": "Q3JPASkgz",
-  "version": 2
+  "version": 3
 }
