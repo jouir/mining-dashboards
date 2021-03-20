@@ -53,7 +53,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1612282845458,
+  "iteration": 1616226444425,
   "links": [],
   "panels": [
     {
@@ -289,7 +289,7 @@
                 "value": null
               },
               {
-                "color": "rgb(0, 0, 0)",
+                "color": "green",
                 "value": 1
               }
             ]
@@ -390,7 +390,7 @@
                 "value": null
               },
               {
-                "color": "rgb(0, 0, 0)",
+                "color": "green",
                 "value": 1
               }
             ]

@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1616224784979,
+  "iteration": 1616226350258,
   "links": [],
   "panels": [
     {
@@ -919,7 +919,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgb(0, 0, 0)",
+                "color": "green",
                 "value": null
               }
             ]
@@ -1205,7 +1205,7 @@
                 "value": null
               },
               {
-                "color": "rgb(0, 0, 0)",
+                "color": "green",
                 "value": 0.00001
               }
             ]
@@ -1537,7 +1537,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgb(0, 0, 0)",
+                "color": "green",
                 "value": null
               }
             ]
@@ -2049,7 +2049,7 @@
                 "value": null
               },
               {
-                "color": "rgb(0, 0, 0)",
+                "color": "green",
                 "value": 1
               }
             ]
@@ -2851,5 +2851,5 @@
   "timezone": "",
   "title": "Flexpool overview",
   "uid": "Q3JPASkgz",
-  "version": 5
+  "version": 6
 }
