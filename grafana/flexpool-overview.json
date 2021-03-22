@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1616400750476,
+  "iteration": 1616408648761,
   "links": [],
   "panels": [
     {
@@ -2844,7 +2844,7 @@
         "name": "timezone",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "Africa/Tunis",
             "value": "Africa/Tunis"
           },
@@ -2925,11 +2925,16 @@
           },
           {
             "selected": false,
+            "text": "Europe/London",
+            "value": "Europe/London"
+          },
+          {
+            "selected": false,
             "text": "Europe/Moscow",
             "value": "Europe/Moscow"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "Europe/Paris",
             "value": "Europe/Paris"
           },
@@ -2944,7 +2949,7 @@
             "value": "Europe/Zurich"
           }
         ],
-        "query": "Africa/Tunis,America/Chicago,America/Fortaleza,America/Los_Angeles,America/Moncton,America/New_York,America/Sao_Paulo,America/St_Johns,America/Toronto,America/Vancouver,Asia/Jakarta,Asia/Karachi,Asia/Kolkata,Asia/Singapore,Europe/Berlin,Europe/Kiev,Europe/Moscow,Europe/Paris,Europe/Zagreb,Europe/Zurich",
+        "query": "Africa/Tunis,America/Chicago,America/Fortaleza,America/Los_Angeles,America/Moncton,America/New_York,America/Sao_Paulo,America/St_Johns,America/Toronto,America/Vancouver,Asia/Jakarta,Asia/Karachi,Asia/Kolkata,Asia/Singapore,Europe/Berlin,Europe/Kiev,Europe/London,Europe/Moscow,Europe/Paris,Europe/Zagreb,Europe/Zurich",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
@@ -2971,5 +2976,5 @@
   "timezone": "",
   "title": "Flexpool overview",
   "uid": "Q3JPASkgz",
-  "version": 9
+  "version": 10
 }
