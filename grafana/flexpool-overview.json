@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1616226350258,
+  "iteration": 1616400750476,
   "links": [],
   "panels": [
     {
@@ -145,7 +145,7 @@
           "measurement": "flexpool_balance",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(1d);",
+          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(1d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -201,7 +201,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(1d);",
+          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(1d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -334,7 +334,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(blocks_increase) FROM (select non_negative_difference(\"confirmed\") AS blocks_increase FROM \"flexpool_pool_block_count\" WHERE $timeFilter) GROUP BY time(1d);",
+          "query": "SELECT sum(blocks_increase) FROM (select non_negative_difference(\"confirmed\") AS blocks_increase FROM \"flexpool_pool_block_count\" WHERE $timeFilter) GROUP BY time(1d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -469,7 +469,7 @@
           "measurement": "flexpool_balance",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(31d);",
+          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(31d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -525,7 +525,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(31d);",
+          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(31d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -658,7 +658,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(blocks_increase) FROM (select non_negative_difference(\"confirmed\") AS blocks_increase FROM \"flexpool_pool_block_count\" WHERE $timeFilter) GROUP BY time(31d);",
+          "query": "SELECT sum(blocks_increase) FROM (select non_negative_difference(\"confirmed\") AS blocks_increase FROM \"flexpool_pool_block_count\" WHERE $timeFilter) GROUP BY time(31d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2828,6 +2828,126 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "Africa/Tunis",
+          "value": "Africa/Tunis"
+        },
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "timezone",
+        "options": [
+          {
+            "selected": false,
+            "text": "Africa/Tunis",
+            "value": "Africa/Tunis"
+          },
+          {
+            "selected": false,
+            "text": "America/Chicago",
+            "value": "America/Chicago"
+          },
+          {
+            "selected": false,
+            "text": "America/Fortaleza",
+            "value": "America/Fortaleza"
+          },
+          {
+            "selected": false,
+            "text": "America/Los_Angeles",
+            "value": "America/Los_Angeles"
+          },
+          {
+            "selected": false,
+            "text": "America/Moncton",
+            "value": "America/Moncton"
+          },
+          {
+            "selected": false,
+            "text": "America/New_York",
+            "value": "America/New_York"
+          },
+          {
+            "selected": false,
+            "text": "America/Sao_Paulo",
+            "value": "America/Sao_Paulo"
+          },
+          {
+            "selected": false,
+            "text": "America/St_Johns",
+            "value": "America/St_Johns"
+          },
+          {
+            "selected": false,
+            "text": "America/Toronto",
+            "value": "America/Toronto"
+          },
+          {
+            "selected": false,
+            "text": "America/Vancouver",
+            "value": "America/Vancouver"
+          },
+          {
+            "selected": false,
+            "text": "Asia/Jakarta",
+            "value": "Asia/Jakarta"
+          },
+          {
+            "selected": false,
+            "text": "Asia/Karachi",
+            "value": "Asia/Karachi"
+          },
+          {
+            "selected": false,
+            "text": "Asia/Kolkata",
+            "value": "Asia/Kolkata"
+          },
+          {
+            "selected": false,
+            "text": "Asia/Singapore",
+            "value": "Asia/Singapore"
+          },
+          {
+            "selected": false,
+            "text": "Europe/Berlin",
+            "value": "Europe/Berlin"
+          },
+          {
+            "selected": false,
+            "text": "Europe/Kiev",
+            "value": "Europe/Kiev"
+          },
+          {
+            "selected": false,
+            "text": "Europe/Moscow",
+            "value": "Europe/Moscow"
+          },
+          {
+            "selected": true,
+            "text": "Europe/Paris",
+            "value": "Europe/Paris"
+          },
+          {
+            "selected": false,
+            "text": "Europe/Zagreb",
+            "value": "Europe/Zagreb"
+          },
+          {
+            "selected": false,
+            "text": "Europe/Zurich",
+            "value": "Europe/Zurich"
+          }
+        ],
+        "query": "Africa/Tunis,America/Chicago,America/Fortaleza,America/Los_Angeles,America/Moncton,America/New_York,America/Sao_Paulo,America/St_Johns,America/Toronto,America/Vancouver,Asia/Jakarta,Asia/Karachi,Asia/Kolkata,Asia/Singapore,Europe/Berlin,Europe/Kiev,Europe/Moscow,Europe/Paris,Europe/Zagreb,Europe/Zurich",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
       }
     ]
   },
@@ -2851,5 +2971,5 @@
   "timezone": "",
   "title": "Flexpool overview",
   "uid": "Q3JPASkgz",
-  "version": 6
+  "version": 9
 }
