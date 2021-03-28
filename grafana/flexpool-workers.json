@@ -53,7 +53,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1616949277856,
+  "iteration": 1616949775192,
   "links": [],
   "panels": [
     {
@@ -141,10 +141,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_workers",
+          "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "home",
-          "query": "SELECT mean(\"effective_hashrate\") FROM \"flexpool_workers\" WHERE (\"miner\" =~ /^$miner$/ AND \"name\" =~ /^$worker$/) AND $timeFilter GROUP BY time($__interval), \"miner\" fill(null)",
+          "query": "SELECT mean(\"effective_hashrate\") FROM \"flexpool_miner_workers\" WHERE (\"miner\" =~ /^$miner$/ AND \"name\" =~ /^$worker$/) AND $timeFilter GROUP BY time($__interval), \"miner\" fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -198,10 +198,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_workers",
+          "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"reported_hashrate\") FROM \"flexpool_workers\" WHERE (\"miner\" =~ /^$miner$/ AND \"name\" =~ /^$worker$/) AND $timeFilter GROUP BY time($__interval), \"miner\" fill(null)",
+          "query": "SELECT mean(\"reported_hashrate\") FROM \"flexpool_miner_workers\" WHERE (\"miner\" =~ /^$miner$/ AND \"name\" =~ /^$worker$/) AND $timeFilter GROUP BY time($__interval), \"miner\" fill(null)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -337,7 +337,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_workers",
+          "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -438,7 +438,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_workers",
+          "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -569,7 +569,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_workers",
+          "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -618,7 +618,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_workers",
+          "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -667,7 +667,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_workers",
+          "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "C",
@@ -803,7 +803,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_workers",
+          "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -906,7 +906,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_workers",
+          "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1010,7 +1010,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_workers",
+          "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
