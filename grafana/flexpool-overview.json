@@ -142,10 +142,10 @@
               "type": "time"
             }
           ],
-          "measurement": "flexpool_balance",
+          "measurement": "flexpool_miner_balance",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(1d) TZ('$timezone');",
+          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(1d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -201,7 +201,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(1d) TZ('$timezone');",
+          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(1d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -466,10 +466,10 @@
               "type": "time"
             }
           ],
-          "measurement": "flexpool_balance",
+          "measurement": "flexpool_miner_balance",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(31d) TZ('$timezone');",
+          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(31d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -525,7 +525,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(31d) TZ('$timezone');",
+          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(31d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -796,10 +796,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_balance",
+          "measurement": "flexpool_miner_balance",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -843,7 +843,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate FROM \"flexpool_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate FROM \"flexpool_miner_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -981,10 +981,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_balance",
+          "measurement": "flexpool_miner_balance",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1028,7 +1028,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate  FROM \"flexpool_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate  FROM \"flexpool_miner_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1119,10 +1119,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_daily_revenue_estimation",
+          "measurement": "flexpool_miner_daily_revenue_estimation",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1267,10 +1267,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_daily_revenue_estimation",
+          "measurement": "flexpool_miner_daily_revenue_estimation",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1314,7 +1314,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate FROM \"flexpool_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate FROM \"flexpool_miner_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1412,10 +1412,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_paid",
+          "measurement": "flexpool_miner_paid",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1459,7 +1459,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate FROM \"flexpool_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate FROM \"flexpool_miner_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1599,10 +1599,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_paid",
+          "measurement": "flexpool_miner_paid",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1646,7 +1646,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate FROM \"flexpool_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate FROM \"flexpool_miner_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1753,10 +1753,10 @@
       "targets": [
         {
           "groupBy": [],
-          "measurement": "flexpool_payments",
+          "measurement": "flexpool_miner_payments",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"amount\"/1000000000000000000,  \"amount\"/1000000000000000000*$exchange_rate as \"amount (fiat)\",  \"duration\" FROM \"flexpool_payments\" WHERE (\"miner\" =~ /^$miner$/) order by time desc limit 6",
+          "query": "SELECT \"amount\"/1000000000000000000,  \"amount\"/1000000000000000000*$exchange_rate as \"amount (fiat)\",  \"duration\" FROM \"flexpool_miner_payments\" WHERE (\"miner\" =~ /^$miner$/) order by time desc limit 6",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -1878,7 +1878,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_stats",
+          "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1921,7 +1921,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_stats",
+          "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -1964,7 +1964,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_stats",
+          "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "C",
@@ -2098,7 +2098,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_stats",
+          "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -2141,7 +2141,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_stats",
+          "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -2184,7 +2184,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_stats",
+          "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "C",
@@ -2310,7 +2310,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_stats",
+          "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -2353,7 +2353,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_stats",
+          "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -2396,7 +2396,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_stats",
+          "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "C",
@@ -2521,7 +2521,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_stats",
+          "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -2619,7 +2619,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_stats",
+          "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -2718,7 +2718,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_stats",
+          "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -2772,7 +2772,7 @@
         "multi": false,
         "name": "miner",
         "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"miner\"",
+        "query": "SHOW TAG VALUES FROM flexpool_miner_stats WITH KEY = \"miner\"",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
