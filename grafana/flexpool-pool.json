@@ -48,11 +48,12 @@
       }
     ]
   },
+  "description": "Pool statistics",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617000054518,
+  "iteration": 1617000748199,
   "links": [],
   "panels": [
     {
@@ -2146,8 +2147,7 @@
   "style": "dark",
   "tags": [
     "flexpool",
-    "mining",
-    "pool"
+    "mining"
   ],
   "templating": {
     "list": [
@@ -2155,8 +2155,8 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "Europe/Paris",
-          "value": "Europe/Paris"
+          "text": "UTC",
+          "value": "UTC"
         },
         "error": null,
         "hide": 0,
@@ -2165,6 +2165,11 @@
         "multi": false,
         "name": "timezone",
         "options": [
+          {
+            "selected": true,
+            "text": "UTC",
+            "value": "UTC"
+          },
           {
             "selected": false,
             "text": "Africa/Tunis",
@@ -2256,7 +2261,7 @@
             "value": "Europe/Moscow"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "Europe/Paris",
             "value": "Europe/Paris"
           },
@@ -2271,7 +2276,7 @@
             "value": "Europe/Zurich"
           }
         ],
-        "query": "Africa/Tunis,America/Chicago,America/Fortaleza,America/Los_Angeles,America/Moncton,America/New_York,America/Sao_Paulo,America/St_Johns,America/Toronto,America/Vancouver,Asia/Jakarta,Asia/Karachi,Asia/Kolkata,Asia/Singapore,Europe/Berlin,Europe/Kiev,Europe/London,Europe/Moscow,Europe/Paris,Europe/Zagreb,Europe/Zurich",
+        "query": "UTC,Africa/Tunis,America/Chicago,America/Fortaleza,America/Los_Angeles,America/Moncton,America/New_York,America/Sao_Paulo,America/St_Johns,America/Toronto,America/Vancouver,Asia/Jakarta,Asia/Karachi,Asia/Kolkata,Asia/Singapore,Europe/Berlin,Europe/Kiev,Europe/London,Europe/Moscow,Europe/Paris,Europe/Zagreb,Europe/Zurich",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
@@ -2283,8 +2288,8 @@
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "",
+  "timezone": "utc",
   "title": "Flexpool pool",
   "uid": "_vo2TQQMk",
-  "version": 15
+  "version": 19
 }

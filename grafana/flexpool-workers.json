@@ -48,12 +48,12 @@
       }
     ]
   },
-  "description": "Hashrates and shares by worker",
+  "description": "Workers statistics",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1616949775192,
+  "iteration": 1617000842181,
   "links": [],
   "panels": [
     {
@@ -1062,6 +1062,7 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_INFLUXDB}",
+        "definition": "",
         "error": null,
         "hide": 0,
         "includeAll": false,
@@ -1084,6 +1085,7 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_INFLUXDB}",
+        "definition": "",
         "error": null,
         "hide": 0,
         "includeAll": false,
@@ -1121,8 +1123,8 @@
       "1d"
     ]
   },
-  "timezone": "",
+  "timezone": "utc",
   "title": "Flexpool workers",
   "uid": "slcUBSzgz",
-  "version": 2
+  "version": 3
 }

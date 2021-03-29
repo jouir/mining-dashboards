@@ -54,12 +54,12 @@
       }
     ]
   },
-  "description": "Global hashrates, shares, balance and revenue estimation",
+  "description": "Miners statistics",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1616482328939,
+  "iteration": 1617000803841,
   "links": [],
   "panels": [
     {
@@ -2832,9 +2832,9 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "Africa/Tunis",
-          "value": "Africa/Tunis"
+          "selected": true,
+          "text": "UTC",
+          "value": "UTC"
         },
         "error": null,
         "hide": 0,
@@ -2845,6 +2845,11 @@
         "options": [
           {
             "selected": true,
+            "text": "UTC",
+            "value": "UTC"
+          },
+          {
+            "selected": false,
             "text": "Africa/Tunis",
             "value": "Africa/Tunis"
           },
@@ -2949,7 +2954,7 @@
             "value": "Europe/Zurich"
           }
         ],
-        "query": "Africa/Tunis,America/Chicago,America/Fortaleza,America/Los_Angeles,America/Moncton,America/New_York,America/Sao_Paulo,America/St_Johns,America/Toronto,America/Vancouver,Asia/Jakarta,Asia/Karachi,Asia/Kolkata,Asia/Singapore,Europe/Berlin,Europe/Kiev,Europe/London,Europe/Moscow,Europe/Paris,Europe/Zagreb,Europe/Zurich",
+        "query": "UTC,Africa/Tunis,America/Chicago,America/Fortaleza,America/Los_Angeles,America/Moncton,America/New_York,America/Sao_Paulo,America/St_Johns,America/Toronto,America/Vancouver,Asia/Jakarta,Asia/Karachi,Asia/Kolkata,Asia/Singapore,Europe/Berlin,Europe/Kiev,Europe/London,Europe/Moscow,Europe/Paris,Europe/Zagreb,Europe/Zurich",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
@@ -2973,8 +2978,8 @@
       "1d"
     ]
   },
-  "timezone": "",
+  "timezone": "utc",
   "title": "Flexpool miners",
   "uid": "Q3JPASkgz",
-  "version": 11
+  "version": 3
 }
