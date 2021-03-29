@@ -461,7 +461,7 @@
           "groupBy": [
             {
               "params": [
-                "31d"
+                "30d"
               ],
               "type": "time"
             }
@@ -469,7 +469,7 @@
           "measurement": "flexpool_miner_balance",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(31d) TZ('$timezone');",
+          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(30d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -487,7 +487,7 @@
               },
               {
                 "params": [
-                  "31d"
+                  "30d"
                 ],
                 "type": "non_negative_derivative"
               },
@@ -525,7 +525,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(31d) TZ('$timezone');",
+          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(30d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -658,7 +658,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(blocks_increase) FROM (select non_negative_difference(\"confirmed\") AS blocks_increase FROM \"flexpool_pool_block_count\" WHERE $timeFilter) GROUP BY time(31d) TZ('$timezone');",
+          "query": "SELECT sum(blocks_increase) FROM (select non_negative_difference(\"confirmed\") AS blocks_increase FROM \"flexpool_pool_block_count\" WHERE $timeFilter) GROUP BY time(30d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1520,7 +1520,7 @@
               },
               {
                 "params": [
-                  "/1000000000000000000*31"
+                  "/1000000000000000000*30"
                 ],
                 "type": "math"
               }
@@ -1569,7 +1569,7 @@
               },
               {
                 "params": [
-                  "/1000000000000000000*$exchange_rate*31"
+                  "/1000000000000000000*$exchange_rate*30"
                 ],
                 "type": "math"
               }
