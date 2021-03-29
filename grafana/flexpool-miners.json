@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617000803841,
+  "iteration": 1617025138189,
   "links": [],
   "panels": [
     {
@@ -123,7 +123,7 @@
       "seriesOverrides": [
         {
           "$$hashKey": "object:337",
-          "alias": "income (fiat)",
+          "alias": "revenue (fiat)",
           "bars": false,
           "yaxis": 2
         }
@@ -133,7 +133,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "income",
+          "alias": "revenue",
           "groupBy": [
             {
               "params": [
@@ -184,7 +184,7 @@
           ]
         },
         {
-          "alias": "income (fiat)",
+          "alias": "revenue (fiat)",
           "groupBy": [
             {
               "params": [
@@ -447,7 +447,7 @@
       "seriesOverrides": [
         {
           "$$hashKey": "object:456",
-          "alias": "income (fiat)",
+          "alias": "revenue (fiat)",
           "bars": false,
           "yaxis": 2
         }
@@ -457,7 +457,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "income",
+          "alias": "revenue",
           "groupBy": [
             {
               "params": [
@@ -508,7 +508,7 @@
           ]
         },
         {
-          "alias": "income (fiat)",
+          "alias": "revenue (fiat)",
           "groupBy": [
             {
               "params": [
@@ -1060,6 +1060,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "${DS_INFLUXDB}",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -1098,7 +1099,14 @@
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:596",
+          "alias": "revenue (fiat)",
+          "lines": false,
+          "yaxis": 2
+        }
+      ],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
@@ -1122,8 +1130,8 @@
           "measurement": "flexpool_miner_daily_revenue_estimation",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
+          "query": "SELECT mean(\"result\") FROM \"flexpool_miner_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1137,6 +1145,63 @@
               {
                 "params": [],
                 "type": "mean"
+              },
+              {
+                "params": [
+                  "/ 1000000000000000000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            }
+          ]
+        },
+        {
+          "alias": "revenue (fiat)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_daily_revenue_estimation",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"result\") / 1000000000000000000 * $echange_rate FROM \"flexpool_miner_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "result"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "/ 1000000000000000000 * $exchange_rate"
+                ],
+                "type": "math"
               }
             ]
           ],
@@ -1169,6 +1234,8 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:442",
+          "decimals": 5,
           "format": "ETH",
           "label": null,
           "logBase": 1,
@@ -1177,6 +1244,8 @@
           "show": true
         },
         {
+          "$$hashKey": "object:443",
+          "decimals": 2,
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1234,7 +1303,7 @@
         "y": 25
       },
       "hideTimeOverride": true,
-      "id": 38,
+      "id": 70,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -1271,7 +1340,7 @@
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1285,6 +1354,12 @@
               {
                 "params": [],
                 "type": "mean"
+              },
+              {
+                "params": [
+                  "/1000000000000000000"
+                ],
+                "type": "math"
               }
             ]
           ],
@@ -1312,32 +1387,415 @@
               "type": "fill"
             }
           ],
+          "measurement": "flexpool_miner_daily_revenue_estimation",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate FROM \"flexpool_miner_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
+          "query": "SELECT mean(\"value\") FROM \"measurement\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
           "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "value"
+                  "result"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
                 "type": "mean"
+              },
+              {
+                "params": [
+                  "/1000000000000000000 * $exchange_rate"
+                ],
+                "type": "math"
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            }
+          ]
         }
       ],
       "timeFrom": "5m",
       "timeShift": null,
       "title": "Estimated daily revenue",
+      "type": "stat"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_INFLUXDB}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 33
+      },
+      "hiddenSeries": false,
+      "id": 69,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.7",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:751",
+          "alias": "revenue (fiat)",
+          "lines": false,
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "revenue",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_daily_revenue_estimation",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"result\") /1000000000000000000 FROM \"flexpool_miner_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "result"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "/1000000000000000000*31"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            }
+          ]
+        },
+        {
+          "alias": "revenue (fiat)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_daily_revenue_estimation",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "result"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "/1000000000000000000*$exchange_rate*31"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Estimated monthly revenue",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:177",
+          "decimals": 5,
+          "format": "ETH",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:178",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "datasource": "${DS_INFLUXDB}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "decimals": 5,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 0.00001
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "revenue (fiat)"
+            },
+            "properties": [
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 33
+      },
+      "hideTimeOverride": true,
+      "id": 71,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "alias": "revenue",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_daily_revenue_estimation",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "result"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "/1000000000000000000*30"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            }
+          ]
+        },
+        {
+          "alias": "revenue (fiat)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_daily_revenue_estimation",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\") FROM \"measurement\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "result"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "/1000000000000000000 * $exchange_rate*30"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": "5m",
+      "timeShift": null,
+      "title": "Estimated monthly revenue",
       "type": "stat"
     },
     {
@@ -1359,7 +1817,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 33
+        "y": 41
       },
       "hiddenSeries": false,
       "id": 40,
@@ -1563,7 +2021,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 33
+        "y": 41
       },
       "hideTimeOverride": true,
       "id": 42,
@@ -1742,7 +2200,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 33
+        "y": 41
       },
       "id": 64,
       "options": {
@@ -1791,7 +2249,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 41
+        "y": 49
       },
       "id": 26,
       "panels": [],
@@ -1832,7 +2290,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 42
+        "y": 50
       },
       "hiddenSeries": false,
       "id": 44,
@@ -2062,7 +2520,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 42
+        "y": 50
       },
       "hideTimeOverride": true,
       "id": 18,
@@ -2224,7 +2682,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 50
+        "y": 58
       },
       "id": 14,
       "panels": [],
@@ -2251,7 +2709,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 51
+        "y": 59
       },
       "hiddenSeries": false,
       "id": 6,
@@ -2485,7 +2943,7 @@
         "h": 8,
         "w": 4,
         "x": 12,
-        "y": 51
+        "y": 59
       },
       "hideTimeOverride": true,
       "id": 8,
@@ -2583,7 +3041,7 @@
         "h": 8,
         "w": 4,
         "x": 16,
-        "y": 51
+        "y": 59
       },
       "hideTimeOverride": true,
       "id": 10,
@@ -2682,7 +3140,7 @@
         "h": 8,
         "w": 4,
         "x": 20,
-        "y": 51
+        "y": 59
       },
       "hideTimeOverride": true,
       "id": 12,
@@ -2981,5 +3439,5 @@
   "timezone": "utc",
   "title": "Flexpool miners",
   "uid": "Q3JPASkgz",
-  "version": 3
+  "version": 4
 }
