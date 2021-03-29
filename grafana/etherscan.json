@@ -109,7 +109,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "fast",
+          "alias": "safe",
           "groupBy": [
             {
               "params": [
@@ -127,13 +127,13 @@
           "measurement": "etherscan_gastracker_gasoracle",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "A",
+          "refId": "C",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "FastGasPrice"
+                  "SafeGasPrice"
                 ],
                 "type": "field"
               },
@@ -183,7 +183,7 @@
           "tags": []
         },
         {
-          "alias": "safe",
+          "alias": "fast",
           "groupBy": [
             {
               "params": [
@@ -201,13 +201,13 @@
           "measurement": "etherscan_gastracker_gasoracle",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "C",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "SafeGasPrice"
+                  "FastGasPrice"
                 ],
                 "type": "field"
               },
@@ -497,5 +497,5 @@
   "timezone": "",
   "title": "Etherscan",
   "uid": "OHZGmm_Gk",
-  "version": 4
+  "version": 5
 }
