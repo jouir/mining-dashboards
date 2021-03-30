@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617027305657,
+  "iteration": 1617084393646,
   "links": [],
   "panels": [
     {
@@ -1376,6 +1376,104 @@
           ]
         },
         {
+          "alias": "weekly",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_daily_revenue_estimation",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "result"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "/1000000000000000000*7"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            }
+          ]
+        },
+        {
+          "alias": "monthly",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_daily_revenue_estimation",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "result"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "/1000000000000000000*30"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            }
+          ]
+        },
+        {
           "alias": "daily (fiat)",
           "groupBy": [
             {
@@ -1427,55 +1525,6 @@
           ]
         },
         {
-          "alias": "weekly",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_miner_daily_revenue_estimation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              },
-              {
-                "params": [
-                  "/1000000000000000000*7"
-                ],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            }
-          ]
-        },
-        {
           "alias": "weekly (fiat)",
           "groupBy": [
             {
@@ -1511,55 +1560,6 @@
               {
                 "params": [
                   "/1000000000000000000*7*$exchange_rate"
-                ],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            }
-          ]
-        },
-        {
-          "alias": "monthly",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_miner_daily_revenue_estimation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "E",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              },
-              {
-                "params": [
-                  "/1000000000000000000*30"
                 ],
                 "type": "math"
               }
@@ -3269,5 +3269,5 @@
   "timezone": "utc",
   "title": "Flexpool miners",
   "uid": "Q3JPASkgz",
-  "version": 2
+  "version": 3
 }
