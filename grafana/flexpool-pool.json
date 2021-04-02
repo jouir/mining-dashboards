@@ -53,7 +53,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617293861537,
+  "iteration": 1617344353818,
   "links": [],
   "panels": [
     {
@@ -2279,9 +2279,14 @@
             "selected": false,
             "text": "Europe/Zurich",
             "value": "Europe/Zurich"
+          },
+          {
+            "selected": false,
+            "text": "Pacific/Auckland",
+            "value": "Pacific/Auckland"
           }
         ],
-        "query": "UTC,Africa/Tunis,America/Chicago,America/Fortaleza,America/Los_Angeles,America/New_York,America/Moncton,America/New_York,America/Sao_Paulo,America/St_Johns,America/Toronto,America/Vancouver,Asia/Jakarta,Asia/Karachi,Asia/Kolkata,Asia/Singapore,Europe/Berlin,Europe/Kiev,Europe/London,Europe/Moscow,Europe/Paris,Europe/Zagreb,Europe/Zurich",
+        "query": "UTC,Africa/Tunis,America/Chicago,America/Fortaleza,America/Los_Angeles,America/New_York,America/Moncton,America/New_York,America/Sao_Paulo,America/St_Johns,America/Toronto,America/Vancouver,Asia/Jakarta,Asia/Karachi,Asia/Kolkata,Asia/Singapore,Europe/Berlin,Europe/Kiev,Europe/London,Europe/Moscow,Europe/Paris,Europe/Zagreb,Europe/Zurich,Pacific/Auckland",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
@@ -2296,5 +2301,5 @@
   "timezone": "utc",
   "title": "Flexpool pool",
   "uid": "_vo2TQQMk",
-  "version": 20
+  "version": 22
 }
