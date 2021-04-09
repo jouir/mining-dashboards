@@ -53,7 +53,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617000842181,
+  "iteration": 1617949836004,
   "links": [],
   "panels": [
     {
@@ -323,20 +323,7 @@
       "targets": [
         {
           "alias": "hashrate",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
@@ -352,7 +339,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -424,20 +411,7 @@
       "targets": [
         {
           "alias": "hashrate",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
@@ -453,7 +427,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -789,20 +763,7 @@
       "targets": [
         {
           "alias": "valid",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
@@ -818,7 +779,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -892,20 +853,7 @@
       "targets": [
         {
           "alias": "stale",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
@@ -921,7 +869,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -996,20 +944,7 @@
       "targets": [
         {
           "alias": "invalid",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
@@ -1025,7 +960,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -1126,5 +1061,5 @@
   "timezone": "utc",
   "title": "Flexpool workers",
   "uid": "slcUBSzgz",
-  "version": 3
+  "version": 4
 }

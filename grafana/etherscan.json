@@ -352,20 +352,7 @@
       "targets": [
         {
           "alias": "low",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "etherscan_gastracker_gasoracle",
           "orderByTime": "ASC",
           "policy": "default",
@@ -389,20 +376,7 @@
         },
         {
           "alias": "average",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "etherscan_gastracker_gasoracle",
           "orderByTime": "ASC",
           "policy": "default",
@@ -426,20 +400,7 @@
         },
         {
           "alias": "high",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "etherscan_gastracker_gasoracle",
           "orderByTime": "ASC",
           "policy": "default",
@@ -514,20 +475,7 @@
       "targets": [
         {
           "alias": "minimum",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "etherscan_gastracker_gasoracle",
           "orderByTime": "ASC",
           "policy": "default",
@@ -554,15 +502,9 @@
           "groupBy": [
             {
               "params": [
-                "$__interval"
+                "$interval"
               ],
               "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
           "measurement": "etherscan_gastracker_gasoracle",
@@ -588,20 +530,7 @@
         },
         {
           "alias": "maximum",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "etherscan_gastracker_gasoracle",
           "orderByTime": "ASC",
           "policy": "default",
@@ -675,20 +604,7 @@
       "targets": [
         {
           "alias": "minimum",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "etherscan_gastracker_gasoracle",
           "orderByTime": "ASC",
           "policy": "default",
@@ -749,20 +665,7 @@
         },
         {
           "alias": "maximum",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "etherscan_gastracker_gasoracle",
           "orderByTime": "ASC",
           "policy": "default",
@@ -836,20 +739,7 @@
       "targets": [
         {
           "alias": "minimum",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "etherscan_gastracker_gasoracle",
           "orderByTime": "ASC",
           "policy": "default",
@@ -910,20 +800,7 @@
         },
         {
           "alias": "maximum",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "etherscan_gastracker_gasoracle",
           "orderByTime": "ASC",
           "policy": "default",
@@ -1031,5 +908,5 @@
   "timezone": "",
   "title": "Etherscan",
   "uid": "OHZGmm_Gk",
-  "version": 8
+  "version": 9
 }
