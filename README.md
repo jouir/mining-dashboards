@@ -57,7 +57,7 @@ command:
 ```
 docker run --rm -e "MINER_ADDRESS=${MINER_ADDRESS}" \
     -v "${PWD}/docker/telegraf.conf:/etc/telegraf/telegraf.conf:ro" -v "${PWD}/telegraf:/etc/telegraf/telegraf.d:ro" \
-    telegraf:1.15.4 telegraf -test -config /etc/telegraf/telegraf.conf -config-directory /etc/telegraf/telegraf.d
+    telegraf:1.18.2 telegraf -test -config /etc/telegraf/telegraf.conf -config-directory /etc/telegraf/telegraf.d
 ```
 
 Example:
