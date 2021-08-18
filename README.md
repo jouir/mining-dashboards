@@ -55,22 +55,22 @@ Telegraf inputs configurations are stored in [telegraf](telegraf) directory. You
 command:
 
 ```
-docker run --rm -e "MINER_ADDRESS=${MINER_ADDRESS}" \
+docker run --rm -e "MINER_ADDRESS=${MINER_ADDRESS}" -e "COIN=${COIN}" \
     -v "${PWD}/docker/telegraf.conf:/etc/telegraf/telegraf.conf:ro" -v "${PWD}/telegraf:/etc/telegraf/telegraf.d:ro" \
-    telegraf:1.18.2 telegraf -test -config /etc/telegraf/telegraf.conf -config-directory /etc/telegraf/telegraf.d
+    telegraf:1.19.2 telegraf -test -config /etc/telegraf/telegraf.conf -config-directory /etc/telegraf/telegraf.d
 ```
 
 Example:
 
 ```
-2021-02-02T14:39:57Z I! Starting Telegraf 1.15.4
-> currencies,from=ETH,host=docker,to=EUR value=1171.49 1612276798000000000
-> currencies,from=ETH,host=docker,to=USD value=1411.03 1612276798000000000
-> flexpool_balance,host=docker,miner=0x3e2251567f87E4B6a3927158AF9c678ECa87a337 result=69375170480923064 1612276798000000000
-> flexpool_workers,host=docker,miner=0x3e2251567f87E4B6a3927158AF9c678ECa87a337,name=rig1 effective_hashrate=86666666,invalid_shares=0,reported_hashrate=96304517,stale_shares=3,valid_shares=2008 1612276798000000000
-> flexpool_daily_revenue_estimation,host=docker,miner=0x3e2251567f87E4B6a3927158AF9c678ECa87a337 result=6710141993155250 1612276798000000000
-> flexpool_paid,host=docker,miner=0x3e2251567f87E4B6a3927158AF9c678ECa87a337 result=0 1612276798000000000
-> flexpool_stats,host=docker,miner=0x3e2251567f87E4B6a3927158AF9c678ECa87a337 current_effective_hashrate=86666666,current_reported_hashrate=96304517,daily_effective_hashrate=92962962.625,daily_invalid_shares=0,daily_reported_hashrate=96286435.27777778,daily_stale_shares=3,daily_valid_shares=2008 1612276798000000000
+2021-08-18T09:05:45Z I! Starting Telegraf 1.19.2
+> flexpool_pool_workers_count,coin=eth,host=docker result=43022 1629277546000000000
+> flexpool_pool_blocks,coin=eth,host=docker,miner=0x80072FDaB52a9BED1f77A4f47CE8590eCF2d69Dd difficulty=8038304869759675,luck=0.2723280636238729,mevReward=74193593913914900,number=13046195,reward=2244945505143161600,roundTime=266,staticBlockReward=2000000000000000000,txFeeReward=170751911229246620 1629248941000000000
+> flexpool_pool_blocks,coin=eth,host=docker,miner=0xc0224A1F6B7296598a09746b4106612562248F02 difficulty=8018674568139472,luck=0.9997781967425715,mevReward=0,number=13046171,reward=2093729787481399800,roundTime=969,staticBlockReward=2000000000000000000,txFeeReward=93729787481399740 1629248676000000000
+> flexpool_pool_blocks,coin=eth,host=docker,miner=0xbe6Fa3d44e4fD10fE05d8e90fD820d1f16EEd9e2 difficulty=8069770590952829,luck=0.7709800334318287,mevReward=56831219018865630,number=13046106,reward=2162018055750582000,roundTime=753,staticBlockReward=2000000000000000000,txFeeReward=105186836731716500 1629247706000000000
+> flexpool_pool_blocks,coin=eth,host=docker,miner=0xbF846283Ab2BE655844807FB9DbA086AF202a4d2 difficulty=8046149393032298,luck=1.4665340430067546,mevReward=29415246569886180,number=13046045,reward=2072298444980926500,roundTime=1425,staticBlockReward=2000000000000000000,txFeeReward=42883198411040420 1629246953000000000
+> flexpool_pool_blocks,coin=eth,host=docker,miner=0xdF44B7Dce392a0267f315c2c7711200c9620981C difficulty=8050114629713925,luck=1.66199322809835,mevReward=0,number=13045942,reward=2141479945370403800,roundTime=1612,staticBlockReward=2000000000000000000,txFeeReward=141479945370403760 1629245528000000000
+> flexpool_pool_blocks,coin=eth,host=docker,miner=0xE1E5372F00Fe6b05FD89c8110D4a29b29B916a7d difficulty=8109240971665971,luck=0.9366252682018412,mevReward=15080560933545792,number=13045830,reward=2088916235271470600,roundTime=918,staticBlockReward=2000000000000000000,txFeeReward=73835674337924700 1629243916000000000
 ```
 
 Once you are confident with your configuration, reload the container:

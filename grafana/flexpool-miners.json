@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617949390461,
+  "iteration": 1629269857941,
   "links": [],
   "panels": [
     {
@@ -88,7 +88,32 @@
           "custom": {},
           "links": []
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "XCH"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ETH"
+              }
+            ]
+          }
+        ]
       },
       "fill": 1,
       "fillGradient": 0,
@@ -133,7 +158,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "revenue",
+          "alias": "revenue (ETH)",
           "groupBy": [
             {
               "params": [
@@ -145,7 +170,7 @@
           "measurement": "flexpool_miner_balance",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(1d) TZ('$timezone');",
+          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"balance\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND \"coin\" = 'eth' AND $timeFilter) GROUP BY time(1d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -201,9 +226,98 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(1d) TZ('$timezone');",
+          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"balance\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND \"coin\" = 'eth' AND $timeFilter) GROUP BY time(1d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "revenue (XCH)",
+          "groupBy": [
+            {
+              "params": [
+                "1d"
+              ],
+              "type": "time"
+            }
+          ],
+          "measurement": "flexpool_miner_balance",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(balance_increase)/1000000000000 FROM (select non_negative_difference(\"balance\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND \"coin\" = 'xch' AND $timeFilter) GROUP BY time(1d) TZ('$timezone');",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "result"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "1d"
+                ],
+                "type": "non_negative_derivative"
+              },
+              {
+                "params": [
+                  " / 1000000000000000000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            }
+          ]
+        },
+        {
+          "alias": "revenue (fiat)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(balance_increase)/1000000000000*$exchange_rate FROM (select non_negative_difference(\"balance\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND \"coin\" = 'xch' AND $timeFilter) GROUP BY time(1d) TZ('$timezone');",
+          "rawQuery": true,
+          "refId": "D",
           "resultFormat": "time_series",
           "select": [
             [
@@ -244,7 +358,7 @@
         {
           "$$hashKey": "object:180",
           "decimals": 5,
-          "format": "ETH",
+          "format": "XCH",
           "label": "income",
           "logBase": 1,
           "max": null,
@@ -321,7 +435,7 @@
           "groupBy": [
             {
               "params": [
-                "$__interval"
+                "1d"
               ],
               "type": "time"
             },
@@ -332,17 +446,18 @@
               "type": "fill"
             }
           ],
+          "measurement": "flexpool_pool_blocks_chart",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT sum(blocks_increase) FROM (select non_negative_difference(\"confirmed\") AS blocks_increase FROM \"flexpool_pool_block_count\" WHERE $timeFilter) GROUP BY time(1d) TZ('$timezone');",
-          "rawQuery": true,
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "value"
+                  "blockCount"
                 ],
                 "type": "field"
               },
@@ -352,7 +467,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -412,7 +533,32 @@
           "custom": {},
           "links": []
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "XCH"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ETH"
+              }
+            ]
+          }
+        ]
       },
       "fill": 1,
       "fillGradient": 0,
@@ -457,7 +603,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "revenue",
+          "alias": "revenue (XCH)",
           "groupBy": [
             {
               "params": [
@@ -469,7 +615,7 @@
           "measurement": "flexpool_miner_balance",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(30d) TZ('$timezone');",
+          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"balance\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND coin = 'xch' AND $timeFilter) GROUP BY time(30d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -525,9 +671,99 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"result\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND $timeFilter) GROUP BY time(30d) TZ('$timezone');",
+          "query": "SELECT sum(balance_increase)/1000000000000000000*$exchange_rate FROM (select non_negative_difference(\"balance\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND coin = 'xch' AND $timeFilter) GROUP BY time(30d) TZ('$timezone');",
           "rawQuery": true,
           "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "revenue (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "30d"
+              ],
+              "type": "time"
+            }
+          ],
+          "measurement": "flexpool_miner_balance",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(balance_increase)/1000000000000000000 FROM (select non_negative_difference(\"balance\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND coin = 'eth' AND $timeFilter) GROUP BY time(30d) TZ('$timezone');",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "result"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "30d"
+                ],
+                "type": "non_negative_derivative"
+              },
+              {
+                "params": [
+                  " / 1000000000000000000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            }
+          ]
+        },
+        {
+          "alias": "revenue (fiat)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(balance_increase)/1000000000000000000 *$exchange_rate FROM (select non_negative_difference(\"balance\") AS balance_increase FROM \"flexpool_miner_balance\" WHERE \"miner\" =~ /^$miner$/ AND coin = 'eth' AND $timeFilter) GROUP BY time(30d) TZ('$timezone');",
+          "rawQuery": true,
+          "refId": "D",
           "resultFormat": "time_series",
           "select": [
             [
@@ -569,7 +805,7 @@
         {
           "$$hashKey": "object:180",
           "decimals": 5,
-          "format": "ETH",
+          "format": "XCH",
           "label": "income",
           "logBase": 1,
           "max": null,
@@ -645,7 +881,7 @@
           "groupBy": [
             {
               "params": [
-                "$__interval"
+                "31d"
               ],
               "type": "time"
             },
@@ -656,27 +892,34 @@
               "type": "fill"
             }
           ],
+          "measurement": "flexpool_pool_blocks_chart",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT sum(blocks_increase) FROM (select non_negative_difference(\"confirmed\") AS blocks_increase FROM \"flexpool_pool_block_count\" WHERE $timeFilter) GROUP BY time(30d) TZ('$timezone');",
-          "rawQuery": true,
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "value"
+                  "blockCount"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "sum"
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -735,7 +978,32 @@
           "custom": {},
           "links": []
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "XCH"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ETH"
+              }
+            ]
+          }
+        ]
       },
       "fill": 1,
       "fillGradient": 0,
@@ -781,7 +1049,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "balance",
+          "alias": "balance (XCH)",
           "groupBy": [
             {
               "params": [
@@ -800,20 +1068,26 @@
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "result"
+                  "balance"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
                 "type": "mean"
+              },
+              {
+                "params": [
+                  "/1000000000000"
+                ],
+                "type": "math"
               }
             ]
           ],
@@ -822,6 +1096,12 @@
               "key": "miner",
               "operator": "=~",
               "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
             }
           ]
         },
@@ -841,27 +1121,160 @@
               "type": "fill"
             }
           ],
+          "measurement": "flexpool_miner_balance",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate FROM \"flexpool_miner_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
-          "refId": "B",
+          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "C",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "value"
+                  "balance"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
                 "type": "mean"
+              },
+              {
+                "params": [
+                  "/1000000000000*$exchange_rate"
+                ],
+                "type": "math"
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            }
+          ]
+        },
+        {
+          "alias": "balance (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_balance",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\") FROM \"measurement\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "balance"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "/1000000000000000000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            }
+          ]
+        },
+        {
+          "alias": "balance (fiat)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_balance",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "balance"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "/1000000000000000000*$exchange_rate"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -886,7 +1299,7 @@
         {
           "$$hashKey": "object:1341",
           "decimals": 5,
-          "format": "ETH",
+          "format": "XCH",
           "label": "balance",
           "logBase": 1,
           "max": null,
@@ -966,7 +1379,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "alias": "balance",
+          "alias": "balance (XCH)",
           "groupBy": [],
           "measurement": "flexpool_miner_balance",
           "orderByTime": "ASC",
@@ -979,7 +1392,95 @@
             [
               {
                 "params": [
-                  "result"
+                  "balance"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "/1000000000000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            }
+          ]
+        },
+        {
+          "alias": "balance (fiat)",
+          "groupBy": [],
+          "measurement": "flexpool_miner_balance",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate  FROM \"flexpool_miner_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "balance"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "/1000000000000*$exchange_rate"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            }
+          ]
+        },
+        {
+          "alias": "balance (ETH)",
+          "groupBy": [],
+          "measurement": "flexpool_miner_balance",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "balance"
                 ],
                 "type": "field"
               },
@@ -1000,6 +1501,12 @@
               "key": "miner",
               "operator": "=~",
               "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
             }
           ]
         },
@@ -1011,13 +1518,13 @@
           "policy": "default",
           "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate  FROM \"flexpool_miner_balance\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": false,
-          "refId": "B",
+          "refId": "D",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "result"
+                  "balance"
                 ],
                 "type": "field"
               },
@@ -1038,6 +1545,12 @@
               "key": "miner",
               "operator": "=~",
               "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
             }
           ]
         }
@@ -1053,508 +1566,37 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "${DS_INFLUXDB}",
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 25
-      },
-      "hiddenSeries": false,
-      "id": 36,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true,
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "$$hashKey": "object:596",
-          "alias": "revenue (fiat)",
-          "lines": false,
-          "yaxis": 2
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "revenue",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_miner_daily_revenue_estimation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"result\") FROM \"flexpool_miner_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              },
-              {
-                "params": [
-                  "/ 1000000000000000000"
-                ],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            }
-          ]
-        },
-        {
-          "alias": "revenue (fiat)",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_miner_daily_revenue_estimation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"result\") / 1000000000000000000 * $echange_rate FROM \"flexpool_miner_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              },
-              {
-                "params": [
-                  "/ 1000000000000000000 * $exchange_rate"
-                ],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Estimated daily revenue",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:442",
-          "decimals": 5,
-          "format": "ETH",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:443",
-          "decimals": 2,
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "datasource": "${DS_INFLUXDB}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "decimals": 5,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 0.00001
-              }
-            ]
-          },
-          "unit": "ETH"
         },
         "overrides": [
           {
             "matcher": {
               "id": "byRegexp",
-              "options": ".*fiat.*"
+              "options": "/XCH/"
             },
             "properties": [
               {
                 "id": "unit",
-                "value": "short"
-              },
+                "value": "XCH"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
               {
-                "id": "decimals",
-                "value": 2
+                "id": "unit",
+                "value": "ETH"
               }
             ]
           }
         ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 25
-      },
-      "hideTimeOverride": true,
-      "id": 70,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.3.7",
-      "targets": [
-        {
-          "alias": "daily",
-          "groupBy": [],
-          "measurement": "flexpool_miner_daily_revenue_estimation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_daily_revenue_estimation\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "/1000000000000000000"
-                ],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            }
-          ]
-        },
-        {
-          "alias": "weekly",
-          "groupBy": [],
-          "measurement": "flexpool_miner_daily_revenue_estimation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "/1000000000000000000*7"
-                ],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            }
-          ]
-        },
-        {
-          "alias": "monthly",
-          "groupBy": [],
-          "measurement": "flexpool_miner_daily_revenue_estimation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "E",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "/1000000000000000000*30"
-                ],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            }
-          ]
-        },
-        {
-          "alias": "daily (fiat)",
-          "groupBy": [],
-          "measurement": "flexpool_miner_daily_revenue_estimation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"value\") FROM \"measurement\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "/1000000000000000000 * $exchange_rate"
-                ],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            }
-          ]
-        },
-        {
-          "alias": "weekly (fiat)",
-          "groupBy": [],
-          "measurement": "flexpool_miner_daily_revenue_estimation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "D",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "/1000000000000000000*7*$exchange_rate"
-                ],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            }
-          ]
-        },
-        {
-          "alias": "monthly (fiat)",
-          "groupBy": [],
-          "measurement": "flexpool_miner_daily_revenue_estimation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "F",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "/1000000000000000000*30*$exchange_rate"
-                ],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            }
-          ]
-        }
-      ],
-      "timeFrom": "5m",
-      "timeShift": null,
-      "title": "Estimated revenue",
-      "type": "stat"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_INFLUXDB}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
       },
       "fill": 1,
       "fillGradient": 0,
@@ -1562,7 +1604,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 33
+        "y": 25
       },
       "hiddenSeries": false,
       "id": 40,
@@ -1600,39 +1642,28 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "paid",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "alias": "paid (XCH)",
+          "groupBy": [],
           "measurement": "flexpool_miner_paid",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "result"
+                  "stats_totalPaid"
                 ],
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "mean"
+                "params": [
+                  "/1000000000000"
+                ],
+                "type": "math"
               }
             ]
           ],
@@ -1641,6 +1672,12 @@
               "key": "miner",
               "operator": "=~",
               "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
             }
           ]
         },
@@ -1660,27 +1697,143 @@
               "type": "fill"
             }
           ],
+          "measurement": "flexpool_miner_paid",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate FROM \"flexpool_miner_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
+          "rawQuery": false,
           "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "value"
+                  "stats_totalPaid"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
                 "type": "mean"
+              },
+              {
+                "params": [
+                  " / 1000000000000 * $exchange_rate"
+                ],
+                "type": "math"
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            }
+          ]
+        },
+        {
+          "alias": "paid (ETH)",
+          "groupBy": [],
+          "measurement": "flexpool_miner_paid",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "stats_totalPaid"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "/1000000000000000000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            }
+          ]
+        },
+        {
+          "alias": "paid (fiat)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_paid",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate FROM \"flexpool_miner_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "stats_totalPaid"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  " / 1000000000000000000 * $exchange_rate"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -1705,7 +1858,7 @@
         {
           "$$hashKey": "object:722",
           "decimals": 5,
-          "format": "ETH",
+          "format": "XCH",
           "label": "paid",
           "logBase": 1,
           "max": null,
@@ -1766,7 +1919,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 33
+        "y": 25
       },
       "hideTimeOverride": true,
       "id": 42,
@@ -1787,39 +1940,32 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "alias": "paid",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "alias": "paid (XCH)",
+          "groupBy": [],
           "measurement": "flexpool_miner_paid",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "result"
+                  "stats_totalPaid"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
+              },
+              {
+                "params": [
+                  " / 1000000000000"
+                ],
+                "type": "math"
               }
             ]
           ],
@@ -1828,46 +1974,138 @@
               "key": "miner",
               "operator": "=~",
               "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
             }
           ]
         },
         {
           "alias": "paid (fiat)",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
+          "measurement": "flexpool_miner_paid",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate FROM \"flexpool_miner_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
+          "rawQuery": false,
           "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "value"
+                  "stats_totalPaid"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " / 1000000000000*$exchange_rate"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            }
+          ]
+        },
+        {
+          "alias": "paid (ETH)",
+          "groupBy": [],
+          "measurement": "flexpool_miner_paid",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"result\")/1000000000000000000 FROM \"flexpool_miner_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "stats_totalPaid"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
+              },
+              {
+                "params": [
+                  "/ 1000000000000000000"
+                ],
+                "type": "math"
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            }
+          ]
+        },
+        {
+          "alias": "paid (fiat)",
+          "groupBy": [],
+          "measurement": "flexpool_miner_paid",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"result\")/1000000000000000000*$exchange_rate FROM \"flexpool_miner_paid\" WHERE (\"miner\" =~ /^$miner$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "stats_totalPaid"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " / 1000000000000000000*$exchange_rate"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            }
+          ]
         }
       ],
       "timeFrom": "5m",
@@ -1901,8 +2139,20 @@
         "overrides": [
           {
             "matcher": {
-              "id": "byName",
-              "options": "amount"
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "decimals",
+                "value": 5
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
             },
             "properties": [
               {
@@ -1914,16 +2164,12 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "amount (fiat)"
+              "options": "paid (fiat)"
             },
             "properties": [
               {
                 "id": "decimals",
                 "value": 2
-              },
-              {
-                "id": "custom.width",
-                "value": null
               }
             ]
           },
@@ -1945,7 +2191,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 33
+        "y": 25
       },
       "id": 64,
       "options": {
@@ -1959,7 +2205,7 @@
           "measurement": "flexpool_miner_payments",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"amount\"/1000000000000000000,  \"amount\"/1000000000000000000*$exchange_rate as \"amount (fiat)\",  \"duration\" FROM \"flexpool_miner_payments\" WHERE (\"miner\" =~ /^$miner$/) order by time desc limit 6",
+          "query": "SELECT \"value\"  / 1000000000000  AS \"paid (XCH)\", \"value\"  / 1000000000000 * $exchange_rate AS \"paid (fiat)\", \"duration\" FROM \"flexpool_miner_payments\" WHERE (\"miner\" =~ /^$miner$/ AND coin = 'xch') ORDER BY time DESC LIMIT 6",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -1967,9 +2213,100 @@
             [
               {
                 "params": [
-                  "amount"
+                  "value"
                 ],
                 "type": "field"
+              },
+              {
+                "params": [
+                  " / 1000000000000"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "paid"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " / 1000000000000*$exchange_rate"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "paid (fiat)"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            }
+          ]
+        },
+        {
+          "groupBy": [],
+          "measurement": "flexpool_miner_payments",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\"  / 1000000000000000000 AS \"paid (ETH)\", \"value\"  / 1000000000000000000 * $exchange_rate AS \"paid (fiat)\", \"duration\" FROM \"flexpool_miner_payments\" WHERE (\"miner\" =~ /^$miner$/ AND coin = 'eth') ORDER BY time DESC LIMIT 6",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " / 1000000000000"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "paid"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " / 1000000000000*$exchange_rate"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "paid (fiat)"
+                ],
+                "type": "alias"
               }
             ]
           ],
@@ -1994,7 +2331,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 41
+        "y": 33
       },
       "id": 26,
       "panels": [],
@@ -2027,7 +2364,32 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Hs"
+              }
+            ]
+          }
+        ]
       },
       "fill": 1,
       "fillGradient": 0,
@@ -2035,7 +2397,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 42
+        "y": 34
       },
       "hiddenSeries": false,
       "id": 44,
@@ -2066,7 +2428,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "effective",
+          "alias": "effective (XCH)",
           "groupBy": [
             {
               "params": [
@@ -2090,7 +2452,7 @@
             [
               {
                 "params": [
-                  "current_effective_hashrate"
+                  "currentEffectiveHashrate"
                 ],
                 "type": "field"
               },
@@ -2105,11 +2467,17 @@
               "key": "miner",
               "operator": "=~",
               "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
             }
           ]
         },
         {
-          "alias": "reported",
+          "alias": "reported (XCH)",
           "groupBy": [
             {
               "params": [
@@ -2133,7 +2501,7 @@
             [
               {
                 "params": [
-                  "current_reported_hashrate"
+                  "reportedHashrate"
                 ],
                 "type": "field"
               },
@@ -2148,11 +2516,17 @@
               "key": "miner",
               "operator": "=~",
               "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
             }
           ]
         },
         {
-          "alias": "daily effective",
+          "alias": "average effective (XCH)",
           "groupBy": [
             {
               "params": [
@@ -2176,7 +2550,7 @@
             [
               {
                 "params": [
-                  "daily_effective_hashrate"
+                  "averageEffectiveHashrate"
                 ],
                 "type": "field"
               },
@@ -2191,6 +2565,159 @@
               "key": "miner",
               "operator": "=~",
               "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            }
+          ]
+        },
+        {
+          "alias": "effective (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "currentEffectiveHashrate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            }
+          ]
+        },
+        {
+          "alias": "reported (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "reportedHashrate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            }
+          ]
+        },
+        {
+          "alias": "average effective (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "averageEffectiveHashrate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
             }
           ]
         }
@@ -2202,7 +2729,7 @@
       "title": "Hashrates",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -2216,7 +2743,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:154",
-          "format": "Hs",
+          "format": "bytes",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -2257,15 +2784,40 @@
               }
             ]
           },
-          "unit": "Hs"
+          "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Hs"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 42
+        "y": 34
       },
       "hideTimeOverride": true,
       "id": 18,
@@ -2286,7 +2838,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "alias": "effective",
+          "alias": "effective (XCH)",
           "groupBy": [],
           "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
@@ -2297,7 +2849,7 @@
             [
               {
                 "params": [
-                  "current_effective_hashrate"
+                  "currentEffectiveHashrate"
                 ],
                 "type": "field"
               },
@@ -2312,11 +2864,17 @@
               "key": "miner",
               "operator": "=~",
               "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
             }
           ]
         },
         {
-          "alias": "reported",
+          "alias": "reported (XCH)",
           "groupBy": [],
           "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
@@ -2327,7 +2885,7 @@
             [
               {
                 "params": [
-                  "current_reported_hashrate"
+                  "reportedHashrate"
                 ],
                 "type": "field"
               },
@@ -2342,11 +2900,17 @@
               "key": "miner",
               "operator": "=~",
               "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
             }
           ]
         },
         {
-          "alias": "daily effective",
+          "alias": "average effective (XCH)",
           "groupBy": [],
           "measurement": "flexpool_miner_stats",
           "orderByTime": "ASC",
@@ -2357,7 +2921,7 @@
             [
               {
                 "params": [
-                  "daily_effective_hashrate"
+                  "averageEffectiveHashrate"
                 ],
                 "type": "field"
               },
@@ -2372,6 +2936,120 @@
               "key": "miner",
               "operator": "=~",
               "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            }
+          ]
+        },
+        {
+          "alias": "effective (ETH)",
+          "groupBy": [],
+          "measurement": "flexpool_miner_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "currentEffectiveHashrate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            }
+          ]
+        },
+        {
+          "alias": "reported (ETH)",
+          "groupBy": [],
+          "measurement": "flexpool_miner_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "reportedHashrate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            }
+          ]
+        },
+        {
+          "alias": "average effective (ETH)",
+          "groupBy": [],
+          "measurement": "flexpool_miner_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "averageEffectiveHashrate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
             }
           ]
         }
@@ -2388,7 +3066,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 50
+        "y": 42
       },
       "id": 14,
       "panels": [],
@@ -2415,7 +3093,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 51
+        "y": 43
       },
       "hiddenSeries": false,
       "id": 6,
@@ -2442,14 +3120,17 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:2759",
           "alias": "valid",
           "color": "#56A64B"
         },
         {
+          "$$hashKey": "object:2760",
           "alias": "stale",
           "color": "#F2CC0C"
         },
         {
+          "$$hashKey": "object:2761",
           "alias": "invalid",
           "color": "#E02F44"
         }
@@ -2483,7 +3164,7 @@
             [
               {
                 "params": [
-                  "daily_valid_shares"
+                  "validShares"
                 ],
                 "type": "field"
               },
@@ -2526,7 +3207,7 @@
             [
               {
                 "params": [
-                  "daily_stale_shares"
+                  "staleShares"
                 ],
                 "type": "field"
               },
@@ -2569,7 +3250,7 @@
             [
               {
                 "params": [
-                  "daily_invalid_shares"
+                  "invalidShares"
                 ],
                 "type": "field"
               },
@@ -2586,7 +3267,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Daily shares",
+      "title": "Shares",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -2602,6 +3283,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:2780",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2610,6 +3292,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:2781",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2649,7 +3332,7 @@
         "h": 8,
         "w": 4,
         "x": 12,
-        "y": 51
+        "y": 43
       },
       "hideTimeOverride": true,
       "id": 8,
@@ -2681,7 +3364,7 @@
             [
               {
                 "params": [
-                  "daily_valid_shares"
+                  "validShares"
                 ],
                 "type": "field"
               },
@@ -2734,7 +3417,7 @@
         "h": 8,
         "w": 4,
         "x": 16,
-        "y": 51
+        "y": 43
       },
       "hideTimeOverride": true,
       "id": 10,
@@ -2766,7 +3449,7 @@
             [
               {
                 "params": [
-                  "daily_stale_shares"
+                  "staleShares"
                 ],
                 "type": "field"
               },
@@ -2820,7 +3503,7 @@
         "h": 8,
         "w": 4,
         "x": 20,
-        "y": 51
+        "y": 43
       },
       "hideTimeOverride": true,
       "id": 12,
@@ -2852,7 +3535,7 @@
             [
               {
                 "params": [
-                  "daily_invalid_shares"
+                  "invalidShares"
                 ],
                 "type": "field"
               },
@@ -2877,6 +3560,7 @@
       "type": "stat"
     }
   ],
+  "refresh": false,
   "schemaVersion": 26,
   "style": "dark",
   "tags": [
@@ -2895,9 +3579,32 @@
         "includeAll": false,
         "label": null,
         "multi": false,
+        "name": "coin",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM flexpool_miner_stats WITH KEY = \"coin\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
+        "definition": "",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
         "name": "miner",
         "options": [],
-        "query": "SHOW TAG VALUES FROM flexpool_miner_stats WITH KEY = \"miner\"",
+        "query": "SHOW TAG VALUES FROM flexpool_miner_stats WITH KEY = \"miner\" WHERE \"coin\" = '$coin'",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -2935,7 +3642,7 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_INFLUXDB}",
-        "definition": "select value from currencies where \"to\" =~ /^$currency$/ order by desc limit 1",
+        "definition": "",
         "error": null,
         "hide": 2,
         "includeAll": false,
@@ -2943,7 +3650,7 @@
         "multi": false,
         "name": "exchange_rate",
         "options": [],
-        "query": "select value from currencies where \"to\" =~ /^$currency$/ order by desc limit 1",
+        "query": "select value from currencies where \"to\" =~ /^$currency$/ and \"from\" =~ /^(?i)$coin$/ order by desc limit 1",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -3116,5 +3823,5 @@
   "timezone": "utc",
   "title": "Flexpool miners",
   "uid": "Q3JPASkgz",
-  "version": 6
+  "version": 21
 }

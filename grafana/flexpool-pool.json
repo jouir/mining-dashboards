@@ -53,7 +53,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617517178341,
+  "iteration": 1629216495656,
   "links": [],
   "panels": [
     {
@@ -80,7 +80,32 @@
         "defaults": {
           "custom": {}
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Hs"
+              }
+            ]
+          }
+        ]
       },
       "fill": 1,
       "fillGradient": 0,
@@ -118,7 +143,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "total",
+          "alias": "total (ETH)",
           "groupBy": [
             {
               "params": [
@@ -152,7 +177,70 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "total (XCH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"total\") FROM \"flexpool_pool_hashrate\" WHERE (\"coin\" = 'xch' AND \"coin\" =~ /^$coin$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "total"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -213,9 +301,34 @@
               }
             ]
           },
-          "unit": "Hs"
+          "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Hs"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 9,
@@ -241,7 +354,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "alias": "total",
+          "alias": "total (XCH)",
           "groupBy": [],
           "measurement": "flexpool_pool_hashrate",
           "orderByTime": "ASC",
@@ -262,7 +375,55 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "total (ETH)",
+          "groupBy": [],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "total"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -281,7 +442,32 @@
         "defaults": {
           "custom": {}
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Hs"
+              }
+            ]
+          }
+        ]
       },
       "fill": 1,
       "fillGradient": 0,
@@ -319,118 +505,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "eu",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_pool_hashrate",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "eu"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "us",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_pool_hashrate",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "E",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "us"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "sa",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_pool_hashrate",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "D",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "sa"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "as",
+          "alias": "as (XCH)",
           "groupBy": [
             {
               "params": [
@@ -454,7 +529,7 @@
             [
               {
                 "params": [
-                  "as"
+                  "regions_as"
                 ],
                 "type": "field"
               },
@@ -464,10 +539,22 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         },
         {
-          "alias": "au",
+          "alias": "au (XCH)",
           "groupBy": [
             {
               "params": [
@@ -491,7 +578,7 @@
             [
               {
                 "params": [
-                  "au"
+                  "regions_au"
                 ],
                 "type": "field"
               },
@@ -501,7 +588,411 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "eu (XCH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_eu"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "sa (XCH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_sa"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "us (XCH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_us"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "as (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_as"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "au (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "G",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_au"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "eu (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "H",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_eu"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "sa (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "I",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_sa"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "us (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "J",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_us"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -563,9 +1054,34 @@
               }
             ]
           },
-          "unit": "Hs"
+          "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Hs"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 9,
@@ -591,79 +1107,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "alias": "eu",
-          "groupBy": [],
-          "measurement": "flexpool_pool_hashrate",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "eu"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "us",
-          "groupBy": [],
-          "measurement": "flexpool_pool_hashrate",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "E",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "us"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "sa",
-          "groupBy": [],
-          "measurement": "flexpool_pool_hashrate",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "D",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "sa"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "as",
+          "alias": "as (XCH)",
           "groupBy": [],
           "measurement": "flexpool_pool_hashrate",
           "orderByTime": "ASC",
@@ -674,7 +1118,7 @@
             [
               {
                 "params": [
-                  "as"
+                  "regions_as"
                 ],
                 "type": "field"
               },
@@ -684,10 +1128,22 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         },
         {
-          "alias": "au",
+          "alias": "au (XCH)",
           "groupBy": [],
           "measurement": "flexpool_pool_hashrate",
           "orderByTime": "ASC",
@@ -698,7 +1154,7 @@
             [
               {
                 "params": [
-                  "au"
+                  "regions_au"
                 ],
                 "type": "field"
               },
@@ -708,7 +1164,307 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "eu (XCH)",
+          "groupBy": [],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_eu"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "sa (XCH)",
+          "groupBy": [],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_sa"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "us (XCH)",
+          "groupBy": [],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_us"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "as (ETH)",
+          "groupBy": [],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_as"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "au (ETH)",
+          "groupBy": [],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "G",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_au"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "eu (ETH)",
+          "groupBy": [],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "H",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_eu"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "sa (ETH)",
+          "groupBy": [],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "I",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_sa"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "us (ETH)",
+          "groupBy": [],
+          "measurement": "flexpool_pool_hashrate",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "J",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "regions_us"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -794,7 +1550,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_pool_miners_online",
+          "measurement": "flexpool_pool_miners_count",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -813,7 +1569,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -904,7 +1666,7 @@
         {
           "alias": "online miners",
           "groupBy": [],
-          "measurement": "flexpool_pool_miners_online",
+          "measurement": "flexpool_pool_miners_count",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -923,7 +1685,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -994,7 +1762,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_pool_workers_online",
+          "measurement": "flexpool_pool_workers_count",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1013,7 +1781,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -1103,7 +1877,7 @@
         {
           "alias": "online workers",
           "groupBy": [],
-          "measurement": "flexpool_pool_workers_online",
+          "measurement": "flexpool_pool_workers_count",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1122,7 +1896,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -1193,40 +1973,31 @@
       "targets": [
         {
           "alias": "count",
-          "groupBy": [
-            {
-              "params": [
-                "1d"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_pool_blocks",
+          "groupBy": [],
+          "measurement": "flexpool_pool_blocks_chart",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT \"blockCount\" FROM \"flexpool_pool_blocks_chart\" WHERE (\"coin\" =~ /^$coin$/) AND $timeFilter tz('$timezone')",
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "number"
+                  "blockCount"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "count"
               }
             ]
           ],
-          "tags": [],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ],
           "tz": "$timezone"
         }
       ],
@@ -1286,10 +2057,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -1322,21 +2089,8 @@
       "targets": [
         {
           "alias": "blocks",
-          "groupBy": [
-            {
-              "params": [
-                "1d"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_pool_blocks",
+          "groupBy": [],
+          "measurement": "flexpool_pool_blocks_chart",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1345,17 +2099,23 @@
             [
               {
                 "params": [
-                  "number"
+                  "blockCount"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "count"
+                "type": "mean"
               }
             ]
           ],
-          "tags": [],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ],
           "tz": "$timezone"
         }
       ],
@@ -1374,7 +2134,32 @@
         "defaults": {
           "custom": {}
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "XCH"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ETH"
+              }
+            ]
+          }
+        ]
       },
       "fill": 1,
       "fillGradient": 0,
@@ -1412,7 +2197,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Block reward",
+          "alias": "Block reward (ETH)",
           "groupBy": [
             {
               "params": [
@@ -1436,7 +2221,7 @@
             [
               {
                 "params": [
-                  "total_rewards"
+                  "reward"
                 ],
                 "type": "field"
               },
@@ -1452,7 +2237,74 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "Block reward (XCH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_pool_blocks",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "reward"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  " / 1000000000000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -1512,16 +2364,61 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
-          "unit": "ETH"
+          "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "XCH"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ETH"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "decimals",
+                "value": 5
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -1547,7 +2444,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "alias": "rewards",
+          "alias": "rewards (XCH)",
           "groupBy": [
             {
               "params": [
@@ -1571,7 +2468,62 @@
             [
               {
                 "params": [
-                  "total_rewards"
+                  "reward"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "/ 1000000000000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
+        },
+        {
+          "alias": "rewards (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_pool_blocks",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "reward"
                 ],
                 "type": "field"
               },
@@ -1587,7 +2539,19 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -1605,7 +2569,32 @@
         "defaults": {
           "custom": {}
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "XCH"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ETH"
+              }
+            ]
+          }
+        ]
       },
       "fill": 1,
       "fillGradient": 0,
@@ -1643,7 +2632,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "total rewards",
+          "alias": "total rewards (XCH)",
           "groupBy": [
             {
               "params": [
@@ -1658,7 +2647,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_pool_blocks",
+          "measurement": "flexpool_pool_blocks_chart",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1667,7 +2656,63 @@
             [
               {
                 "params": [
-                  "total_rewards"
+                  "rewards"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  "/1000000000000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ],
+          "tz": "$timezone"
+        },
+        {
+          "alias": "total rewards (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "1d"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_pool_blocks_chart",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rewards"
                 ],
                 "type": "field"
               },
@@ -1683,7 +2728,19 @@
               }
             ]
           ],
-          "tags": [],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ],
           "tz": "$timezone"
         }
       ],
@@ -1736,7 +2793,6 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
-          "decimals": 5,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1747,9 +2803,42 @@
               }
             ]
           },
-          "unit": "ETH"
+          "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "XCH"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ETH"
+              },
+              {
+                "id": "decimals",
+                "value": 5
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -1775,22 +2864,16 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "alias": "total rewards",
+          "alias": "total rewards (XCH)",
           "groupBy": [
             {
               "params": [
                 "1d"
               ],
               "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
-          "measurement": "flexpool_pool_blocks",
+          "measurement": "flexpool_pool_blocks_chart",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1799,7 +2882,57 @@
             [
               {
                 "params": [
-                  "total_rewards"
+                  "rewards"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  "/1000000000000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ],
+          "tz": "$timezone"
+        },
+        {
+          "alias": "total rewards (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "1d"
+              ],
+              "type": "time"
+            }
+          ],
+          "measurement": "flexpool_pool_blocks_chart",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rewards"
                 ],
                 "type": "field"
               },
@@ -1815,7 +2948,19 @@
               }
             ]
           ],
-          "tags": [],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ],
           "tz": "$timezone"
         }
       ],
@@ -1887,7 +3032,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_pool_average_luck_round_time",
+          "measurement": "flexpool_pool_blocks",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1896,7 +3041,7 @@
             [
               {
                 "params": [
-                  "round_time"
+                  "roundTime"
                 ],
                 "type": "field"
               },
@@ -1906,7 +3051,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -1998,7 +3149,7 @@
         {
           "alias": "round time",
           "groupBy": [],
-          "measurement": "flexpool_pool_average_luck_round_time",
+          "measurement": "flexpool_pool_blocks",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"round_time\") FROM \"flexpool_pool_average_luck_round_time\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
@@ -2009,7 +3160,7 @@
             [
               {
                 "params": [
-                  "round_time"
+                  "roundTime"
                 ],
                 "type": "field"
               },
@@ -2019,7 +3170,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -2100,14 +3257,16 @@
             },
             {
               "params": [
-                "null"
+                "linear"
               ],
               "type": "fill"
             }
           ],
-          "measurement": "flexpool_pool_average_luck_round_time",
+          "measurement": "flexpool_pool_blocks",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT mean(\"luck\") *100 FROM \"flexpool_pool_blocks\" WHERE (\"coin\" =~ /^$coin$/) AND $timeFilter GROUP BY time($__interval) fill(linear)",
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -2130,7 +3289,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -2221,7 +3386,7 @@
         {
           "alias": "luck",
           "groupBy": [],
-          "measurement": "flexpool_pool_average_luck_round_time",
+          "measurement": "flexpool_pool_current_luck",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -2230,7 +3395,7 @@
             [
               {
                 "params": [
-                  "luck"
+                  "result"
                 ],
                 "type": "field"
               },
@@ -2246,7 +3411,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -2321,7 +3492,7 @@
           "measurement": "flexpool_pool_average_luck_round_time",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT 1/mean(\"luck\") *100 FROM \"flexpool_pool_average_luck_round_time\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT 1/mean(\"result\") *100 FROM \"flexpool_pool_current_luck\" WHERE coin =~ /^$coin$/ AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2452,7 +3623,7 @@
           "measurement": "flexpool_pool_average_luck_round_time",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT 1/last(\"luck\") *100 FROM \"flexpool_pool_average_luck_round_time\" WHERE $timeFilter fill(null)",
+          "query": "SELECT 1/last(\"result\") *100 FROM \"flexpool_pool_current_luck\" WHERE coin =~ /^$coin$/ AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2633,6 +3804,29 @@
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
+        "definition": "",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "coin",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM flexpool_miner_stats WITH KEY = \"coin\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       }
     ]
   },
@@ -2644,5 +3838,5 @@
   "timezone": "utc",
   "title": "Flexpool pool",
   "uid": "_vo2TQQMk",
-  "version": 27
+  "version": 10
 }

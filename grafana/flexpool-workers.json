@@ -53,7 +53,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617949836004,
+  "iteration": 1629269888685,
   "links": [],
   "panels": [
     {
@@ -82,7 +82,32 @@
           "custom": {},
           "links": []
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Hs"
+              }
+            ]
+          }
+        ]
       },
       "fill": 1,
       "fillGradient": 0,
@@ -120,76 +145,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "effective",
+          "alias": "current effective (XCH)",
           "groupBy": [
             {
               "params": [
                 "$__interval"
               ],
               "type": "time"
-            },
-            {
-              "params": [
-                "miner"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "flexpool_miner_workers",
-          "orderByTime": "ASC",
-          "policy": "home",
-          "query": "SELECT mean(\"effective_hashrate\") FROM \"flexpool_miner_workers\" WHERE (\"miner\" =~ /^$miner$/ AND \"name\" =~ /^$worker$/) AND $timeFilter GROUP BY time($__interval), \"miner\" fill(null)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "effective_hashrate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "miner",
-              "operator": "=~",
-              "value": "/^$miner$/"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=~",
-              "value": "/^$worker$/"
-            }
-          ]
-        },
-        {
-          "alias": "reported",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "miner"
-              ],
-              "type": "tag"
             },
             {
               "params": [
@@ -201,15 +163,13 @@
           "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"reported_hashrate\") FROM \"flexpool_miner_workers\" WHERE (\"miner\" =~ /^$miner$/ AND \"name\" =~ /^$worker$/) AND $timeFilter GROUP BY time($__interval), \"miner\" fill(null)",
-          "rawQuery": true,
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "reported_hashrate"
+                  "currentEffectiveHashrate"
                 ],
                 "type": "field"
               },
@@ -221,6 +181,12 @@
           ],
           "tags": [
             {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            },
+            {
+              "condition": "AND",
               "key": "miner",
               "operator": "=~",
               "value": "/^$miner$/"
@@ -230,6 +196,195 @@
               "key": "name",
               "operator": "=~",
               "value": "/^$worker$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            }
+          ]
+        },
+        {
+          "alias": "average effective (XCH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_workers",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "averageEffectiveHashrate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            },
+            {
+              "condition": "AND",
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=~",
+              "value": "/^$worker$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            }
+          ]
+        },
+        {
+          "alias": "current effective (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_workers",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "currentEffectiveHashrate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            },
+            {
+              "condition": "AND",
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=~",
+              "value": "/^$worker$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
+            }
+          ]
+        },
+        {
+          "alias": "average effective (ETH)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flexpool_miner_workers",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "averageEffectiveHashrate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            },
+            {
+              "condition": "AND",
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=~",
+              "value": "/^$worker$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
             }
           ]
         }
@@ -254,6 +409,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:7053",
           "format": "Hs",
           "label": null,
           "logBase": 1,
@@ -262,6 +418,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:7054",
           "format": "Hs",
           "label": null,
           "logBase": 1,
@@ -294,9 +451,34 @@
               }
             ]
           },
-          "unit": "Hs"
+          "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Hs"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -322,7 +504,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "alias": "hashrate",
+          "alias": "hashrate (XCH)",
           "groupBy": [],
           "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
@@ -333,7 +515,7 @@
             [
               {
                 "params": [
-                  "effective_hashrate"
+                  "currentEffectiveHashrate"
                 ],
                 "type": "field"
               },
@@ -354,6 +536,66 @@
               "key": "name",
               "operator": "=~",
               "value": "/^$worker$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            }
+          ]
+        },
+        {
+          "alias": "hashrate (ETH)",
+          "groupBy": [],
+          "measurement": "flexpool_miner_workers",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "currentEffectiveHashrate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=~",
+              "value": "/^$worker$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
             }
           ]
         }
@@ -382,9 +624,34 @@
               }
             ]
           },
-          "unit": "Hs"
+          "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/XCH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/ETH/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Hs"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -410,18 +677,20 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "alias": "hashrate",
+          "alias": "hashrate (XCH)",
           "groupBy": [],
           "measurement": "flexpool_miner_workers",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT last(\"reported_hashrate\") FROM \"flexpool_miner_workers\" WHERE (\"miner\" =~ /^$miner$/ AND \"name\" =~ /^$worker$/) AND $timeFilter",
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "reported_hashrate"
+                  "reportedHashrate"
                 ],
                 "type": "field"
               },
@@ -442,6 +711,68 @@
               "key": "name",
               "operator": "=~",
               "value": "/^$worker$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "xch"
+            }
+          ]
+        },
+        {
+          "alias": "hashrate (ETH)",
+          "groupBy": [],
+          "measurement": "flexpool_miner_workers",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"reported_hashrate\") FROM \"flexpool_miner_workers\" WHERE (\"miner\" =~ /^$miner$/ AND \"name\" =~ /^$worker$/) AND $timeFilter",
+          "rawQuery": false,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "reportedHashrate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "miner",
+              "operator": "=~",
+              "value": "/^$miner$/"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=~",
+              "value": "/^$worker$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=",
+              "value": "eth"
             }
           ]
         }
@@ -511,15 +842,18 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "alias": "valid",
+          "$$hashKey": "object:8033",
+          "alias": "/valid/",
           "color": "#56A64B"
         },
         {
-          "alias": "stale",
+          "$$hashKey": "object:8034",
+          "alias": "/stale/",
           "color": "#F2CC0C"
         },
         {
-          "alias": "invalid",
+          "$$hashKey": "object:8035",
+          "alias": "/invalid/",
           "color": "#E02F44"
         }
       ],
@@ -552,7 +886,7 @@
             [
               {
                 "params": [
-                  "valid_shares"
+                  "validShares"
                 ],
                 "type": "field"
               },
@@ -573,6 +907,12 @@
               "key": "name",
               "operator": "=~",
               "value": "/^$worker$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
             }
           ]
         },
@@ -601,7 +941,7 @@
             [
               {
                 "params": [
-                  "stale_shares"
+                  "staleShares"
                 ],
                 "type": "field"
               },
@@ -622,6 +962,12 @@
               "key": "name",
               "operator": "=~",
               "value": "/^$worker$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
             }
           ]
         },
@@ -671,6 +1017,12 @@
               "key": "name",
               "operator": "=~",
               "value": "/^$worker$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
             }
           ]
         }
@@ -679,7 +1031,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Daily shares",
+      "title": "Shares",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -695,6 +1047,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:8054",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -703,6 +1056,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:8055",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -773,7 +1127,7 @@
             [
               {
                 "params": [
-                  "valid_shares"
+                  "validShares"
                 ],
                 "type": "field"
               },
@@ -794,6 +1148,12 @@
               "key": "name",
               "operator": "=~",
               "value": "/^$worker$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
             }
           ]
         }
@@ -863,7 +1223,7 @@
             [
               {
                 "params": [
-                  "stale_shares"
+                  "staleShares"
                 ],
                 "type": "field"
               },
@@ -884,6 +1244,12 @@
               "key": "name",
               "operator": "=~",
               "value": "/^$worker$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
             }
           ]
         }
@@ -954,7 +1320,7 @@
             [
               {
                 "params": [
-                  "invalid_shares"
+                  "invalidShares"
                 ],
                 "type": "field"
               },
@@ -975,6 +1341,12 @@
               "key": "name",
               "operator": "=~",
               "value": "/^$worker$/"
+            },
+            {
+              "condition": "AND",
+              "key": "coin",
+              "operator": "=~",
+              "value": "/^$coin$/"
             }
           ]
         }
@@ -997,7 +1369,28 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_INFLUXDB}",
-        "definition": "",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "coin",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM flexpool_miner_workers WITH KEY = \"coin\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
         "error": null,
         "hide": 0,
         "includeAll": false,
@@ -1005,7 +1398,7 @@
         "multi": false,
         "name": "miner",
         "options": [],
-        "query": "SHOW TAG VALUES FROM flexpool_miner_workers WITH KEY = \"miner\"",
+        "query": "SHOW TAG VALUES FROM flexpool_miner_workers WITH KEY = \"miner\" WHERE coin =~ /^$coin$/",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1042,7 +1435,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {
@@ -1061,5 +1454,5 @@
   "timezone": "utc",
   "title": "Flexpool workers",
   "uid": "slcUBSzgz",
-  "version": 4
+  "version": 3
 }
