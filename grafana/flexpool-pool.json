@@ -3817,7 +3817,7 @@
         "multi": false,
         "name": "coin",
         "options": [],
-        "query": "SHOW TAG VALUES FROM flexpool_miner_stats WITH KEY = \"coin\"",
+        "query": "SHOW TAG VALUES FROM flexpool_pool_hashrate WITH KEY = \"coin\"",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -3838,5 +3838,5 @@
   "timezone": "utc",
   "title": "Flexpool pool",
   "uid": "_vo2TQQMk",
-  "version": 10
+  "version": 11
 }
