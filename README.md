@@ -1,3 +1,11 @@
+# END OF LIFE NOTICE
+
+Flexpool.io was the main source of information for the mining dashboards and it
+[has shut
+down](https://www.reddit.com/r/Flexpool/comments/16q72ul/action_required_flexpoolio_shutdown_notice_nov_1/).
+Due to the lack of activity on this repository for the last couple of years,
+I'm archiving it. Don't hesitate to fork it!
+
 # Mining dashboards
 
 Grafana dashboards for cryptocurrency miners.
